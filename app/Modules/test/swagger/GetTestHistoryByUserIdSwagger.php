@@ -4,9 +4,9 @@ namespace App\Modules\test\swagger;
 
 /**
  * @OA\Post(
- *     path="/api/roadmap/test/answers/show",
+ *     path="/api/zakplay/test/answers/show",
  *     operationId="submitshowAnswer",
- *     tags={"Roadmap test"},
+ *     tags={"zakplay test"},
  *     summary="Submitting test answers",
  *     @OA\Parameter(
  *         name="device_id",

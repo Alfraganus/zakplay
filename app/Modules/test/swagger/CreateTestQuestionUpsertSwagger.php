@@ -2,10 +2,14 @@
 namespace App\Modules\test\swagger;
 
 /**
+ * @OA\Info(
+ *     version="1.0",
+ *     title="Zakplay API endpoints"
+ * )
  * @OA\Post(
- *      path="/api/roadmap/test-question/upsert",
+ *      path="/api/zakplay/test-question/upsert",
  *      operationId="createTestQuestionupsert",
- *      tags={"Roadmap test"},
+ *      tags={"zakplay test"},
  *      summary="Create a new test",
  *      description="Endpoint to create a new test",
  *      @OA\RequestBody(

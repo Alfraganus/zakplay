@@ -3,9 +3,9 @@ namespace App\Modules\test\swagger;
 
 /**
  * @OA\Post(
- *     path="/api/roadmap/test/answers/submit",
+ *     path="/api/zakplay/test/answers/submit",
  *     operationId="submitAnswer",
- *     tags={"Roadmap test"},
+ *     tags={"zakplay test"},
  *     summary="Submitting test answers",
  *     @OA\RequestBody(
  *         description="Data format",
@@ -13,7 +13,7 @@ namespace App\Modules\test\swagger;
  *         @OA\JsonContent(
  *             type="object",
  *             @OA\Property(property="test_id", type="integer", example=2),
- *             @OA\Property(property="lesson_id", type="integer", example=1),
+ *             @OA\Property(property="user_id", type="integer", example=1),
  *             @OA\Property(property="average_time", type="integer", example=1),
  *             @OA\Property(
  *                 property="test_answers",
@@ -24,7 +24,7 @@ namespace App\Modules\test\swagger;
  *                     @OA\Property(
  *                         property="options",
  *                         type="array",
- *                         @OA\Items(type="integer", example="1,2,3,4")
+ *                         @OA\Items(type="integer", example="1")
  *                     ),
  *                 ),
  *                 @OA\Items(

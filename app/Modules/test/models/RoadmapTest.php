@@ -5,12 +5,10 @@ namespace App\Modules\test\models;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
 use Spatie\Translatable\HasTranslations;
 
 class RoadmapTest extends Model
 {
-
     use HasFactory;
     use HasTranslations;
 

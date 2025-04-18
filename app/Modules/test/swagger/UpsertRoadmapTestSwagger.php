@@ -4,19 +4,19 @@ namespace App\Modules\test\swagger;
 
 /**
  * @OA\Post(
- *     path="/api/roadmap/test/upsert",
- *     summary="Upsert a roadmap test",
+ *     path="/api/zakplay/test/upsert",
+ *     summary="Upsert a zakplay test",
  *     description="Creates or updates a roadmap lesson",
  *     operationId="upsertRoadmapTest",
- *      tags={"Roadmap test"},
+ *      tags={"zakplay test"},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(
  *                 @OA\Property(property="id", type="string", example="1"),
- *                 @OA\Property(property="title", type="string", example="Roadmap test Title"),
- *                 @OA\Property(property="description", type="string", example="Roadmap test Description"),
+ *                 @OA\Property(property="title", type="string", example="zakplay test Title"),
+ *                 @OA\Property(property="description", type="string", example="zakplay test Description"),
  *                 @OA\Property(property="lesson_id", type="integer", example=1),
  *                 @OA\Property(property="language", type="string", example="uz_cyril"),
  *             )

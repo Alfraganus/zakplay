@@ -3,17 +3,17 @@ namespace App\Modules\test\swagger;
 
 /**
  * @OA\Get(
- *     path="/api/roadmap/test-question/get-single-question",
+ *     path="/api/zakplay/test-question/get-single-question",
  *     summary="Get a Single Test Question",
  *     description="Retrieve a single test question by test_id and question_id.",
  *     operationId="getSingleQuestion",
- *     tags={"Roadmap test"},
+ *     tags={"zakplay test"},
  *     @OA\Parameter(
  *         name="test_id",
  *         in="query",
  *         required=true,
  *         @OA\Schema(type="integer"),
- *         description="ID of the Roadmap Test"
+ *         description="ID of the zakplay test"
  *     ),
  *     @OA\Parameter(
  *         name="question_id",

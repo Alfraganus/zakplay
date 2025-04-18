@@ -3,9 +3,9 @@ namespace App\Modules\test\swagger;
 
 /**
  * @OA\Delete(
- *      path="/api/roadmap/test/delete",
+ *      path="/api/zakplay/test/delete",
  *      operationId="deleteTest",
- *      tags={"Roadmap test"},
+ *      tags={"zakplay test"},
  *      summary="Delete test",
  *      @OA\Parameter(
  *          name="id",

@@ -4,6 +4,7 @@ namespace App\Modules\test\service;
 
 use App\Models\DeviceToken;
 use App\Models\Setting;
+use App\Models\User;
 use App\Modules\test\models\RoadmapTestQuestion;
 use App\Modules\test\models\UserTestResult;
 use App\Modules\test\repository\RoadmapTestAnswersRepository;
@@ -12,6 +13,7 @@ use App\Modules\test\repository\RoadmapTestQuestionRepository;
 use App\Modules\test\repository\RoadmapTestRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RoadmapTestSubmitService
 {
@@ -32,20 +34,43 @@ class RoadmapTestSubmitService
         RoadmapTestQuestionOptionRepository $roadmapTestQuestionOption,
         RoadmapTestAnswersRepository        $roadmapTestAnswersRepository,
         RoadmapTestRepository               $roadmapTestRepository,
-        RoadmapTestCreateService            $roadmapTestCreateService,
     )
     {
         $this->roadmapTestQuestionRepo = $roadmapTestQuestion;
         $this->roadmapTestQuestionOptionRepo = $roadmapTestQuestionOption;
         $this->roadmapTestAnswersRepo = $roadmapTestAnswersRepository;
         $this->roadmapTestRepository = $roadmapTestRepository;
-        $this->roadmapTestCreateService = $roadmapTestCreateService;
+    }
+
+    private static function getUserData(Request $request): User
+    {
+        $user = User::firstOrNew(
+            ['phone_number' => $request->input('phone')]
+        );
+
+        $user->name = $request->input('name');
+        $user->save();
+
+        return $user;
     }
 
 
     public function submitAnswers(Request $request)
     {
-        $payload = [];
+        $validator = Validator::make($request->all(), [
+            'test_id' => 'required|integer|exists:roadmap_test,id',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|numeric|digits_between:9,15',
+            'test_answers' => 'required|array|min:1',
+            'test_answers.*.question_id' => 'required|integer|exists:roadmap_test_questions,id',
+            'test_answers.*.options' => 'required|array|min:1',
+            'test_answers.*.options.*' => 'required|integer|exists:roadmap_test_question_options,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()], 422);
+        }
+
         $correctAnswers = 0;
         if (!$this->roadmapTestRepository->getById($request->input('test_id'))) {
             return Response()->json([
@@ -87,14 +112,14 @@ class RoadmapTestSubmitService
         $isUserPassed = $testQuestionsCount == $correctAnswers;
 
         $history = UserTestResult::query()->insert([
-            'user_id' =>$request->input('user_id'),
+            'user_id' =>self::getUserData($request)->id,
             'test_id' => $test_id,
             'test_result' => $correctAnswers,
             'percentage' => ($correctAnswers / $testQuestionsCount) * 100,
             'max_score' => $testQuestionsCount,
             'device_id' => $request->header('device_id') ?? null,
             'is_passed' => $isUserPassed,
-            'average_time' =>$request->input('average_time'),
+            'average_time' => $request->input('average_time'),
         ]);
 
         return Response()->json([

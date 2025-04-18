@@ -322,9 +322,13 @@
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "average_time": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Alfra"
+                                    },
+                                    "phone": {
                                         "type": "integer",
-                                        "example": 1
+                                        "example": "998995556677"
                                     },
                                     "test_answers": {
                                         "type": "array",

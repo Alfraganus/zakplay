@@ -8,6 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/docs', [SwaggerController::class, 'index']);
-Route::get('/docs/{any}', [SwaggerController::class, 'index'])->where('any', '.*');
 require base_path('app/Modules/test/Routes.php');

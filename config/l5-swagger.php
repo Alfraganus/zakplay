@@ -54,7 +54,7 @@ return [
             /*
              * Route for accessing parsed swagger annotations.
              */
-            'docs' => 'docs',
+            'docs' => 'public',
 
             /*
              * Route for Oauth2 authentication callback.
@@ -81,7 +81,7 @@ return [
             /*
              * Absolute path to location where parsed annotations will be stored
              */
-            'docs' =>'public/api-docs',
+            'docs' => storage_path('api-docs'),
 
             /*
              * Absolute path to directory where to export views

@@ -12,6 +12,8 @@ Route::get('/test', function () {
 Route::post('/zakplay/test/answers/show', [RoadmapTestController::class, 'getAnswers']);
 Route::post('/zakplay/test/answers/submit', [RoadmapTestController::class, 'submitAnswers']);
 Route::post('/zakplay/test/create', [RoadmapTestController::class, 'createTest']);
+Route::put('/zakplay/test/update/{id}', [RoadmapTestController::class, 'update']);
+
 
 Route::post('/zakplay/department/upsert', [DepartmentController::class, 'upsertDepartment']);
 Route::get('/zakplay/department/all', [DepartmentController::class, 'getAllDepartments']);
@@ -19,7 +21,7 @@ Route::get('/zakplay/department/find-by-id/{id}', [DepartmentController::class, 
 Route::delete('/zakplay/department/delete/{id}', [DepartmentController::class, 'delete']);
 
 Route::get('/zakplay/test/find-by-id/{id}', [RoadmapTestController::class, 'findById']);
-Route::put('/zakplay/test/update/{id}', [RoadmapTestController::class, 'updateTest']);
+//Route::put('/zakplay/test/update/{id}', [RoadmapTestController::class, 'updateTest']);
 Route::delete('/zakplay/test/delete', [RoadmapTestController::class, 'deleteTest']);
 
 Route::get('/zakplay/test-question/get-single-question', [RoadmapTestQuestionController::class, 'getSingleQuestion']);

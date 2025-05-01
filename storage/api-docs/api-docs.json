@@ -479,6 +479,143 @@
                 }
             }
         },
+        "/api/zakplay/test/update/{id}": {
+            "put": {
+                "tags": [
+                    "Roadmap Test"
+                ],
+                "summary": "Update a Roadmap Test",
+                "description": "Update the details of a Roadmap Test, including ad placement, views, and other parameters.",
+                "operationId": "abf16f2d9a66ccc794ff3cbe96914693",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Roadmap Test to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "ad_place",
+                                    "ad_after_question",
+                                    "ad_id",
+                                    "views_limit",
+                                    "time_for_question"
+                                ],
+                                "properties": {
+                                    "ad_place": {
+                                        "description": "The ad placement position",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ad_after_question": {
+                                        "description": "The ad will appear after the question with this ID",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "ad_id": {
+                                        "description": "The ID of the ad",
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "views_limit": {
+                                        "description": "The view limit for the roadmap test",
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "time_for_question": {
+                                        "description": "Time allocated for answering a question in seconds",
+                                        "type": "integer",
+                                        "example": 60
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated the Roadmap Test",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Roadmap test updated successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "ad_place": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "ad_after_question": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "ad_id": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "views_limit": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "time_for_question": {
+                                                    "type": "integer",
+                                                    "example": 60
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Roadmap test not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Roadmap test not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/zakplay/test/upsert": {
             "post": {
                 "tags": [
@@ -576,6 +713,10 @@
         {
             "name": "zakplay test",
             "description": "zakplay test"
+        },
+        {
+            "name": "Roadmap Test",
+            "description": "Roadmap Test"
         }
     ]
 }

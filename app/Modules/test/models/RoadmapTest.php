@@ -5,6 +5,7 @@ namespace App\Modules\test\models;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Spatie\Translatable\HasTranslations;
 
 class RoadmapTest extends Model
@@ -22,6 +23,11 @@ class RoadmapTest extends Model
         'title_',
         'description_',
         'department_id',
+        'ad_place',
+        'ad_after_question',
+        'ad_id',
+        'views_limit',
+        'time_for_question',
     ];
 
     public function getDescriptionAttribute()
@@ -42,6 +48,11 @@ class RoadmapTest extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function ad()
+    {
+        return $this->belongsTo(Ads::class);
     }
 
 }

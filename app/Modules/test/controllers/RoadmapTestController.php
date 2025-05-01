@@ -37,6 +37,33 @@ class RoadmapTestController extends Controller
         );
     }
 
+    public function update(Request $request, $id)
+    {
+        $model = RoadmapTest::find($id);
+
+        if (!$model) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Roadmap test not found'
+            ], 404);
+        }
+
+        $model->fill($request->only([
+            'ad_place',
+            'ad_after_question',
+            'ad_id',
+            'views_limit',
+            'time_for_question',
+        ]));
+
+        $model->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Roadmap test updated successfully',
+            'data' => $model
+        ]);
+    }
 
 
     public function findById($id)

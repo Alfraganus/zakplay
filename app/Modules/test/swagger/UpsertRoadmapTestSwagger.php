@@ -17,7 +17,7 @@ namespace App\Modules\test\swagger;
  *                 @OA\Property(property="id", type="string", example="1"),
  *                 @OA\Property(property="title", type="string", example="zakplay test Title"),
  *                 @OA\Property(property="description", type="string", example="zakplay test Description"),
- *                 @OA\Property(property="lesson_id", type="integer", example=1),
+ *                 @OA\Property(property="department_id ", type="integer", example=1),
  *                 @OA\Property(property="language", type="string", example="uz_cyril"),
  *             )
  *         )

@@ -21,6 +21,7 @@ class RoadmapTest extends Model
     protected $fillable = [
         'title_',
         'description_',
+        'department_id',
     ];
 
     public function getDescriptionAttribute()
@@ -38,5 +39,9 @@ class RoadmapTest extends Model
         return $this->hasMany(RoadmapTestQuestion::class, 'test_id');
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
 }

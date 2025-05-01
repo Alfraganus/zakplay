@@ -80,6 +80,35 @@
                 }
             }
         },
+        "/api/zakplay/department/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "delete a department by ID",
+                "description": "deletezakplay department by its ID.",
+                "operationId": "4fbcd2789280e78c8cfd244106c8f19d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the zakplay test",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Test not found"
+                    }
+                }
+            }
+        },
         "/api/zakplay/test-question/delete": {
             "delete": {
                 "tags": [
@@ -176,6 +205,48 @@
                 }
             }
         },
+        "/api/zakplay/department/upsert": {
+            "post": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Create a new department",
+                "description": "Endpoint to create a new test",
+                "operationId": "upsertDepartment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "department_name_": {
+                                        "type": "string",
+                                        "example": "Karzinka"
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "example": "uz_cyril"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Test created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error or invalid input"
+                    }
+                }
+            }
+        },
         "/api/zakplay/test-question/get-all-questions": {
             "get": {
                 "tags": [
@@ -195,6 +266,53 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Question not found"
+                    }
+                }
+            }
+        },
+        "/api/zakplay/department/find-by-id/{id}": {
+            "get": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Get a department by ID",
+                "description": "Retrieve details of a zakplay department by its ID.",
+                "operationId": "findByIdde",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the zakplay test",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Test not found"
+                    }
+                }
+            }
+        },
+        "/api/zakplay/department/all": {
+            "get": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Get deoartnebts",
+                "description": "Retrieve departments",
+                "operationId": "getdepartment",
                 "responses": {
                     "200": {
                         "description": "Successful operation"
@@ -387,7 +505,7 @@
                                         "type": "string",
                                         "example": "zakplay test Description"
                                     },
-                                    "lesson_id": {
+                                    "department_id ": {
                                         "type": "integer",
                                         "example": 1
                                     },

@@ -482,7 +482,7 @@
         "/api/zakplay/test/update/{id}": {
             "put": {
                 "tags": [
-                    "Roadmap Test"
+                    "zakplay test"
                 ],
                 "summary": "Update a Roadmap Test",
                 "description": "Update the details of a Roadmap Test, including ad placement, views, and other parameters.",
@@ -525,7 +525,7 @@
                                     "ad_id": {
                                         "description": "The ID of the ad",
                                         "type": "integer",
-                                        "example": 10
+                                        "example": 2
                                     },
                                     "views_limit": {
                                         "description": "The view limit for the roadmap test",
@@ -713,10 +713,6 @@
         {
             "name": "zakplay test",
             "description": "zakplay test"
-        },
-        {
-            "name": "Roadmap Test",
-            "description": "Roadmap Test"
         }
     ]
 }

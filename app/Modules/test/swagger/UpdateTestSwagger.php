@@ -7,7 +7,7 @@ namespace App\Modules\test\swagger;
  *     path="/api/zakplay/test/update/{id}",
  *     summary="Update a Roadmap Test",
  *     description="Update the details of a Roadmap Test, including ad placement, views, and other parameters.",
- *     tags={"Roadmap Test"},
+ *     tags={"zakplay test"},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",

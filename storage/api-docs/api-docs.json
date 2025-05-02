@@ -29,10 +29,6 @@
                                                 "type": "string",
                                                 "example": "What is the capital of France?"
                                             },
-                                            "question_option_type": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
                                             "points": {
                                                 "type": "integer",
                                                 "example": 10
@@ -55,10 +51,6 @@
                                                 "is_correct": {
                                                     "type": "boolean",
                                                     "example": true
-                                                },
-                                                "points": {
-                                                    "type": "integer",
-                                                    "example": 5
                                                 }
                                             },
                                             "type": "object"
@@ -602,6 +594,102 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Roadmap test not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/zakplay/test/upsert-adinfo": {
+            "post": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Upsert a zakplay test",
+                "description": "Creates or updates a roadmap lesson",
+                "operationId": "13461106276eedbd8619f5858147d09b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ad_place": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ad_after_question": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ad_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "time_for_question": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "views_limit": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"

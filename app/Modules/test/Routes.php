@@ -32,6 +32,7 @@ Route::delete('/zakplay/test-question/delete', [RoadmapTestQuestionController::c
 
 Route::post('/zakplay/test-question/upsert', [RoadmapTestQuestionController::class, 'createTestQuestionWithLanguage']);
 Route::post('/zakplay/test/upsert', [RoadmapTestController::class, 'upsertRoadmapTest']);
+Route::post('/zakplay/test/upsert-adinfo', [RoadmapTestController::class, 'upsertRoadmapTest']);
 Route::post('/zakplay/test-question/upsert-matching', [RoadmapTestQuestionController::class, 'createTestQuestionTypeMatching']);
 
 

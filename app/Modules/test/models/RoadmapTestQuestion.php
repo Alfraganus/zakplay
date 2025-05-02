@@ -28,7 +28,6 @@ class RoadmapTestQuestion extends Model implements HasMedia
     protected $fillable = [
         'test_id',
         'question_text_',
-        'question_option_type',
         'points',
     ];
 

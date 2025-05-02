@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Modules\test\swagger;
+
+/**
+ * @OA\Post(
+ *     path="/api/zakplay/test/upsert-adinfo",
+ *     summary="Upsert a zakplay test",
+ *     description="Creates or updates a roadmap lesson",
+ *      tags={"zakplay test"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 @OA\Property(property="id", type="integer", example=1),
+ *                 @OA\Property(property="ad_place", type="integer", example=1),
+ *                 @OA\Property(property="ad_after_question", type="integer", example=1),
+ *                 @OA\Property(property="ad_id", type="integer", example=1),
+ *                 @OA\Property(property="time_for_question", type="integer", example=1),
+ *                 @OA\Property(property="views_limit", type="integer", example=1)
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="boolean"
+ *             ),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object"
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Bad Request",
+ *         @OA\JsonContent(
+ *             @OA\Property(
+ *                 property="error",
+ *                 type="string"
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Internal Server Error",
+ *         @OA\JsonContent(
+ *             @OA\Property(
+ *                 property="error",
+ *                 type="string"
+ *             )
+ *         )
+ *     )
+ * )
+ */
+
+class UpsertAdInfoSwagger
+{
+}

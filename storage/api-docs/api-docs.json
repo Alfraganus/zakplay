@@ -630,21 +630,17 @@
                                         "type": "string",
                                         "example": "1"
                                     },
-                                    "title": {
+                                    "title_": {
                                         "type": "string",
                                         "example": "zakplay test Title"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "zakplay test Description"
                                     },
                                     "department_id ": {
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "language": {
-                                        "type": "string",
-                                        "example": "uz_cyril"
+                                    "is_active ": {
+                                        "type": "integer",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"

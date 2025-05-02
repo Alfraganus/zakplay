@@ -17,11 +17,11 @@ class RoadmapTest extends Model
 
     const MEDIA_COLLECTION = "roadmap_test";
 
-    public $translatable = ['title_', 'description_'];
 
     protected $fillable = [
         'title_',
         'description_',
+        'is_active',
         'department_id',
         'ad_place',
         'ad_after_question',

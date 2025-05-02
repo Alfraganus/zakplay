@@ -33,7 +33,7 @@ class RoadmapTestController extends Controller
         return MultiLanguageModelService::roadmapGlobalInsert(
             $request,
             RoadmapTest::class,
-            ['title', 'description'],
+            [],
         );
     }
 

@@ -19,7 +19,6 @@ class Department extends Model
         'department_name_',
         'is_active'
     ];
-    public $translatable = ['department_name_'];
 
 
     protected static function booted()
@@ -34,7 +33,7 @@ class Department extends Model
         return json_decode($this->attributes['department_name_'],true)[Setting::getLanguage()] ?? Setting::NO_DATA_MESSAGE;
     }
 
-    public function roadmapTests()
+    public function test()
     {
         return $this->hasMany(\App\Modules\test\models\RoadmapTest::class);
     }

@@ -11,6 +11,11 @@ class Ads extends Model
         'department_id',
         'title',
         'is_active',
+        'ad_list'
+    ];
+
+    protected $casts = [
+        'ad_list' => 'array',
     ];
 
     public function department()

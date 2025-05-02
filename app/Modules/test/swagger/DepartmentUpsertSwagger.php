@@ -14,8 +14,7 @@ namespace App\Modules\test\swagger;
  *             mediaType="application/json",
  *             @OA\Schema(
  *                 @OA\Property(property="id", type="string", example="1"),
- *                 @OA\Property(property="department_name_", type="string", example="Karzinka"),
- *                 @OA\Property(property="language", type="string", example="uz_cyril"),
+ *                 @OA\Property(property="department_name_", type="string", example="Karzinka")
  *             )
  *         )
  *     ),

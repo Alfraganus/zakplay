@@ -226,10 +226,6 @@
                                     "department_name_": {
                                         "type": "string",
                                         "example": "Karzinka"
-                                    },
-                                    "language": {
-                                        "type": "string",
-                                        "example": "uz_cyril"
                                     }
                                 },
                                 "type": "object"

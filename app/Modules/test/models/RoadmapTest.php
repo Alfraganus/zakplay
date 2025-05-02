@@ -28,6 +28,12 @@ class RoadmapTest extends Model
         'ad_id',
         'views_limit',
         'time_for_question',
+        'used_times',
+        'ads'
+    ];
+
+    protected $casts = [
+        'ads' => 'array',
     ];
 
     public function getDescriptionAttribute()
@@ -53,6 +59,11 @@ class RoadmapTest extends Model
     public function ad()
     {
         return $this->belongsTo(Ads::class);
+    }
+
+    public function roadmapTests()
+    {
+        return $this->hasMany(RoadmapTest::class, 'department_id');
     }
 
 }

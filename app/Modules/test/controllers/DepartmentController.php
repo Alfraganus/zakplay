@@ -34,14 +34,14 @@ class DepartmentController extends Controller
         return MultiLanguageModelService::roadmapGlobalInsert(
             $request,
             Department::class,
-            ['department_name'],
+          []
         );
     }
 
     public function getAllDepartments()
     {
         return Response()->json([
-            'data'=> Department::all()
+            'data'=> Department::withCount('test')->get()
         ]);
     }
 

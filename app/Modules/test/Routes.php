@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\test\controllers\AdController;
 use App\Modules\test\controllers\DepartmentController;
 use App\Modules\test\controllers\RoadmapTestController;
 use App\Modules\test\controllers\RoadmapTestQuestionController;
@@ -12,7 +13,14 @@ Route::get('/test', function () {
 Route::post('/zakplay/test/answers/show', [RoadmapTestController::class, 'getAnswers']);
 Route::post('/zakplay/test/answers/submit', [RoadmapTestController::class, 'submitAnswers']);
 Route::post('/zakplay/test/create', [RoadmapTestController::class, 'createTest']);
+Route::get('/zakplay/test/get-by-department_id', [RoadmapTestController::class, 'getAllTestByDepartmentId']);
 Route::put('/zakplay/test/update/{id}', [RoadmapTestController::class, 'update']);
+
+Route::post('/ads/upsert', [AdController::class, 'upsertAds']);
+Route::get('/ads/{id}', [AdController::class, 'findSingleAd']);
+Route::get('/ads', [AdController::class, 'findAllAds']);
+Route::delete('/ads/{id}', [AdController::class, 'deleteAd']);
+
 
 
 Route::post('/zakplay/department/upsert', [DepartmentController::class, 'upsertDepartment']);

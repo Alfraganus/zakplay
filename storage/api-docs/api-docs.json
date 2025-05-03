@@ -5,6 +5,39 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/ads": {
+            "get": {
+                "tags": [
+                    "Ads"
+                ],
+                "summary": "Get all ads",
+                "operationId": "95e866a5f6c8b3a8997ce0a74d7ce918",
+                "responses": {
+                    "200": {
+                        "description": "List of ads",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/zakplay/test-question/upsert": {
             "post": {
                 "tags": [
@@ -68,6 +101,127 @@
                     },
                     "422": {
                         "description": "Validation error or invalid input"
+                    }
+                }
+            }
+        },
+        "/api/ads/{id}": {
+            "get": {
+                "tags": [
+                    "Ads"
+                ],
+                "summary": "Get a single ad by ID",
+                "operationId": "26115a3b639eda338e4d4215d8c7ac77",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the ad",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ad not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ad not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Ads"
+                ],
+                "summary": "Delete an ad by ID",
+                "operationId": "83f4de151f256f1c5cf2d1633f0013ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the ad to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ad deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ad not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ad not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -231,6 +385,113 @@
                     },
                     "422": {
                         "description": "Validation error or invalid input"
+                    }
+                }
+            }
+        },
+        "/api/zakplay/test/get-by-department_id": {
+            "get": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Get all tests by department ID",
+                "description": "Retrieve all roadmap tests associated with a specific department ID.",
+                "operationId": "e205a05d292dca480a159e5165002af3",
+                "parameters": [
+                    {
+                        "name": "departmentId",
+                        "in": "query",
+                        "description": "ID of the department to get tests for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of tests for the department",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Roadmap Test Title"
+                                                    },
+                                                    "ad_place": {
+                                                        "type": "string",
+                                                        "example": "Place of Ad"
+                                                    },
+                                                    "views_limit": {
+                                                        "type": "integer",
+                                                        "example": 100
+                                                    },
+                                                    "time_for_question": {
+                                                        "type": "integer",
+                                                        "example": 60
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tests found for the given department ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No tests found for the given department"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -700,6 +961,81 @@
                 }
             }
         },
+        "/api/ads/upsert": {
+            "post": {
+                "tags": [
+                    "Ads"
+                ],
+                "summary": "Create or update an ad",
+                "operationId": "upsertAds",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "department_id",
+                                    "title",
+                                    "ad_list_en",
+                                    "ad_list_ru"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "Ad ID (for update only)",
+                                        "type": "integer"
+                                    },
+                                    "department_id": {
+                                        "description": "ID of the department",
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "description": "Title of the ad",
+                                        "type": "string"
+                                    },
+                                    "is_active": {
+                                        "description": "Whether the ad is active",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ad_list_en": {
+                                        "description": "Media file for English version",
+                                        "type": "file"
+                                    },
+                                    "ad_list_ru": {
+                                        "description": "Media file for Russian version",
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
         "/api/zakplay/test/upsert": {
             "post": {
                 "tags": [
@@ -722,11 +1058,11 @@
                                         "type": "string",
                                         "example": "zakplay test Title"
                                     },
-                                    "department_id ": {
+                                    "department_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "is_active ": {
+                                    "is_active": {
                                         "type": "integer",
                                         "example": 1
                                     }
@@ -951,6 +1287,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Ads",
+            "description": "Ads"
+        },
         {
             "name": "zakplay test",
             "description": "zakplay test"

@@ -3,6 +3,7 @@ namespace App\Modules\test\controllers;
 
 use App\Helpers\MultiLanguageModelService;
 use App\Http\Controllers\Controller;
+use App\Modules\test\models\Ads;
 use App\Modules\test\models\RoadmapTest;
 use App\Modules\test\repository\RoadmapTestRepository;
 use App\Modules\test\service\RoadmapTestCreateService;
@@ -27,70 +28,86 @@ class AdController extends Controller
         $this->testSubmitService = $testSubmitService;
     }
 
-    public function upsertRoadmapTest(Request $request)
+    public function upsertAds(Request $request)
     {
-        return MultiLanguageModelService::roadmapGlobalInsert(
-            $request,
-            RoadmapTest::class,
-            ['title', 'description'],
-        );
-    }
-
-    public function update(Request $request, $id)
-    {
-        $model = RoadmapTest::find($id);
-
-        if (!$model) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Roadmap test not found'
-            ], 404);
-        }
+        $model = $request->input('id') ? Ads::find($request->input('id')) : new Ads();
 
         $model->fill($request->only([
-            'ad_place',
-            'ad_after_question',
-            'ad_id',
-            'views_limit',
-            'time_for_question',
+            'department_id',
+            'title',
         ]));
 
         $model->save();
 
+        $adList = [];
+
+        foreach (['en', 'ru'] as $lang) {
+            $inputName = "ad_list_$lang";
+
+            if ($request->hasFile($inputName)) {
+                $file = $request->file($inputName);
+                $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('media/ads', $filename, 'public'); // stored in storage/app/public/media/ads
+
+                $adList[$lang] = "media/ads/$filename";
+            }
+        }
+
+        if (!empty($adList)) {
+            $model->ad_list = $adList;
+            $model->save();
+        }
+
         return response()->json([
             'success' => true,
-            'message' => 'Roadmap test updated successfully',
             'data' => $model
         ]);
     }
 
-
-    public function findById($id)
+    public function findSingleAd($id)
     {
-        $model =  $this->roadmapTestRepo->getById($id);
-        if(empty($model)) {
-           return Response()->json([
-               'error'=>"Result not found"
-           ]);
+        $ad = Ads::find($id);
+
+        if (!$ad) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ad not found'
+            ], 404);
         }
-        return Response()->json([
-            'data'=>$model
+
+        return response()->json([
+            'success' => true,
+            'data' => $ad
         ]);
     }
 
-    public function deleteTest(Request $request)
+    public function findAllAds()
     {
-        return $this->testService->deleteTest($request->input('id'));
+        $ads = Ads::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $ads
+        ]);
     }
 
-    public function submitAnswers(Request $request)
+    public function deleteAd($id)
     {
-      return $this->testSubmitService->submitAnswers($request);
-    }
+        $ad = Ads::find($id);
 
-    public function getAnswers(Request $request)
-    {
-        return $this->testSubmitService->getUserTestResult($request->header('device_id'));
+        if (!$ad) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ad not found'
+            ], 404);
+        }
+
+        $ad->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ad deleted successfully'
+        ]);
     }
 
 }

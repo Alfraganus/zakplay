@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ads extends Model
 {
     protected $table = 'ads';
-
+    public $timestamps = false;
     protected $fillable = [
         'department_id',
         'title',

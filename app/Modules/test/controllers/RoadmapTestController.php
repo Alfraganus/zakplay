@@ -37,6 +37,25 @@ class RoadmapTestController extends Controller
         );
     }
 
+    public function getAllTestByDepartmentId(Request $request)
+    {
+        $tests = RoadmapTest::where('department_id', $request->input('departmentId'))->get();
+
+        if ($tests->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No tests found for the given department'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $tests
+        ]);
+    }
+
+
+
     public function update(Request $request, $id)
     {
         $model = RoadmapTest::find($id);

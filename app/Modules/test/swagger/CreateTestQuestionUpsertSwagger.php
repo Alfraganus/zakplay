@@ -2,6 +2,14 @@
 namespace App\Modules\test\swagger;
 
 /**
+ * @OA\SecurityScheme(
+ *     securityScheme="sanctum",
+ *     type="apiKey",
+ *     in="header",
+ *     name="Authorization",
+ *    description="Enter 'Bearer ' (with a trailing space) followed by your token in the Authorization header. Example: 'Bearer YOUR_TOKEN'"
+ * )
+ *
  * @OA\Info(
  *     version="1.0",
  *     title="Zakplay API endpoints"

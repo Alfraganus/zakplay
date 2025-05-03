@@ -7,7 +7,7 @@ namespace App\Modules\test\swagger;
  *     summary="Get deoartnebts",
  *     description="Retrieve departments",
  *     operationId="getdepartment",
- *     tags={"zakplay test"},
+ *     tags={"department"},
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation",

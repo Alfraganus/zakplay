@@ -6,7 +6,7 @@ namespace App\Modules\test\swagger;
  *     path="/api/zakplay/department/delete/{id}",
  *     summary="delete a department by ID",
  *     description="deletezakplay department by its ID.",
- *     tags={"zakplay test"},
+ *     tags={"department"},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",

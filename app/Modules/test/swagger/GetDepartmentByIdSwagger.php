@@ -7,7 +7,7 @@ namespace App\Modules\test\swagger;
  *     summary="Get a department by ID",
  *     description="Retrieve details of a zakplay department by its ID.",
  *     operationId="findByIdde",
- *     tags={"zakplay test"},
+ *     tags={"department"},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",

@@ -5,7 +5,7 @@ namespace App\Modules\test\swagger;
  * @OA\Post(
  *      path="/api/zakplay/department/upsert",
  *      operationId="upsertDepartment",
- *      tags={"zakplay test"},
+ *     tags={"department"},
  *      summary="Create a new department",
  *      description="Endpoint to create a new test",
  *     @OA\RequestBody(

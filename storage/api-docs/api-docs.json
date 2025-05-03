@@ -75,7 +75,7 @@
         "/api/zakplay/department/delete/{id}": {
             "delete": {
                 "tags": [
-                    "zakplay test"
+                    "department"
                 ],
                 "summary": "delete a department by ID",
                 "description": "deletezakplay department by its ID.",
@@ -200,7 +200,7 @@
         "/api/zakplay/department/upsert": {
             "post": {
                 "tags": [
-                    "zakplay test"
+                    "department"
                 ],
                 "summary": "Create a new department",
                 "description": "Endpoint to create a new test",
@@ -267,7 +267,7 @@
         "/api/zakplay/department/find-by-id/{id}": {
             "get": {
                 "tags": [
-                    "zakplay test"
+                    "department"
                 ],
                 "summary": "Get a department by ID",
                 "description": "Retrieve details of a zakplay department by its ID.",
@@ -296,7 +296,7 @@
         "/api/zakplay/department/all": {
             "get": {
                 "tags": [
-                    "zakplay test"
+                    "department"
                 ],
                 "summary": "Get deoartnebts",
                 "description": "Retrieve departments",
@@ -787,12 +787,186 @@
                     }
                 }
             }
+        },
+        "/api/getme": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get authenticated user info",
+                "operationId": "67096d075e27805e94d1a8e0e109c2e8",
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user info",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "john@example.com"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2023-10-01T12:00:00Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2023-10-01T12:00:00Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log in a user",
+                "operationId": "baf8ef5324a0a790bf30f2b00f6d0ecf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login"
+                    },
+                    "422": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "operationId": "14195398e1cc07dc93534986c40fb68b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful registration"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
         }
     },
     "tags": [
         {
             "name": "zakplay test",
             "description": "zakplay test"
+        },
+        {
+            "name": "department",
+            "description": "department"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ],
+    "security": [
+        {
+            "sanctum": []
         }
     ]
 }

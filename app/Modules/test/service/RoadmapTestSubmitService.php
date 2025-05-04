@@ -68,7 +68,7 @@ class RoadmapTestSubmitService
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 422);
+            return response()->json(['errors' => $validator->errors()->all() ], 422);
         }
 
         $correctAnswers = 0;

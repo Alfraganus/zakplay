@@ -5,6 +5,197 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/drivers": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get all drivers",
+                "operationId": "a75c8627a59b2479de780c37b0c06e03",
+                "responses": {
+                    "200": {
+                        "description": "List of drivers"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Create a new driver",
+                "operationId": "829ed7a657b54c9727b94e7b814c2497",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "date_of_brith",
+                                    "car_model",
+                                    "car_color",
+                                    "car_plate_number"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "Ali Valiyev"
+                                    },
+                                    "date_of_brith": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "login": {
+                                        "type": "string",
+                                        "example": "ali123"
+                                    },
+                                    "pincode": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "car_model": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "car_color": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "car_plate_number": {
+                                        "type": "string",
+                                        "example": "01A123BC"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Driver created"
+                    }
+                }
+            }
+        },
+        "/api/drivers/{id}": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get driver by ID",
+                "operationId": "b8cec5341d14f654472f26d4c0771b61",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Driver details"
+                    },
+                    "404": {
+                        "description": "Driver not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Update driver",
+                "operationId": "5b5192462e5b1b239c63d12bda639848",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "Updated Name"
+                                    },
+                                    "date_of_brith": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1995-02-02"
+                                    },
+                                    "login": {
+                                        "type": "string",
+                                        "example": "new_login"
+                                    },
+                                    "pincode": {
+                                        "type": "string",
+                                        "example": "654321"
+                                    },
+                                    "car_model": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "car_color": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "car_plate_number": {
+                                        "type": "string",
+                                        "example": "01X456YZ"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Driver updated"
+                    },
+                    "404": {
+                        "description": "Driver not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Delete driver",
+                "operationId": "8351d443e6a33b2c835fb86af7782d12",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Driver deleted"
+                    },
+                    "404": {
+                        "description": "Driver not found"
+                    }
+                }
+            }
+        },
         "/api/ads": {
             "get": {
                 "tags": [
@@ -1124,6 +1315,181 @@
                 }
             }
         },
+        "/api/tablets": {
+            "get": {
+                "tags": [
+                    "Tablets"
+                ],
+                "summary": "Get list of tablets",
+                "operationId": "ebcdf212023b3344ca8ad250023b6fb3",
+                "responses": {
+                    "200": {
+                        "description": "List of tablets"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tablets"
+                ],
+                "summary": "Create new tablet",
+                "operationId": "696f6b90961df36a88316b0a9b4bc90b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "date",
+                                    "current_address",
+                                    "driver_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Tablet 1"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-05-04"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": 1
+                                    },
+                                    "current_address": {
+                                        "type": "string",
+                                        "example": "Tashkent, Uzbekistan"
+                                    },
+                                    "driver_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tablet created"
+                    }
+                }
+            }
+        },
+        "/api/tablets/{id}": {
+            "get": {
+                "tags": [
+                    "Tablets"
+                ],
+                "summary": "Get tablet by ID",
+                "operationId": "b9e1208baf6db66bcbfc6ddfd457c22f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tablet details"
+                    },
+                    "404": {
+                        "description": "Tablet not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tablets"
+                ],
+                "summary": "Update tablet",
+                "operationId": "ae22c1cb834454e8026d34c51337b2b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Tablet"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-01"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "current_address": {
+                                        "type": "string",
+                                        "example": "Samarkand"
+                                    },
+                                    "driver_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tablet updated"
+                    },
+                    "404": {
+                        "description": "Tablet not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tablets"
+                ],
+                "summary": "Delete tablet",
+                "operationId": "23f858d781a776f82f3fbaaef392ce9d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tablet deleted"
+                    },
+                    "404": {
+                        "description": "Tablet not found"
+                    }
+                }
+            }
+        },
         "/api/getme": {
             "post": {
                 "tags": [
@@ -1288,6 +1654,10 @@
     },
     "tags": [
         {
+            "name": "Drivers",
+            "description": "Driver management endpoints"
+        },
+        {
             "name": "Ads",
             "description": "Ads"
         },
@@ -1298,6 +1668,10 @@
         {
             "name": "department",
             "description": "department"
+        },
+        {
+            "name": "Tablets",
+            "description": "Tablets"
         },
         {
             "name": "Auth",

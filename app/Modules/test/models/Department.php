@@ -17,7 +17,9 @@ class Department extends Model
 
     protected $fillable = [
         'department_name_',
-        'is_active'
+        'is_active',
+        'is_next_one',
+        'priority_number'
     ];
 
 

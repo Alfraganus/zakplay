@@ -37,6 +37,11 @@ class RoadmapTestController extends Controller
         );
     }
 
+    public function getTest()
+    {
+
+    }
+
     public function getAllTestByDepartmentId(Request $request)
     {
         $tests = RoadmapTest::where('department_id', $request->input('departmentId'))->get();

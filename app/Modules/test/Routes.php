@@ -7,6 +7,7 @@ use App\Modules\test\controllers\RoadmapTestQuestionController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/zakplay/test/get', [RoadmapTestQuestionController::class, 'getNextTest']);
 Route::post('/zakplay/test/answers/show', [RoadmapTestController::class, 'getAnswers']);
 Route::post('/zakplay/test/answers/submit', [RoadmapTestController::class, 'submitAnswers']);
 Route::post('/zakplay/test/create', [RoadmapTestController::class, 'createTest']);

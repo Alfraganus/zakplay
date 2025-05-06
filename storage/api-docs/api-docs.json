@@ -580,6 +580,75 @@
                 }
             }
         },
+        "/api/zakplay/test/get": {
+            "get": {
+                "tags": [
+                    "zakplay test"
+                ],
+                "summary": "Get the next test and mark the next department",
+                "description": "Returns a random test from the current department based on priority, and marks the next department as is_next_one.",
+                "operationId": "45755f8bd444133f8aafcfe6acb59f5d",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with test and next department info",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "selected_test": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "department_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Sample Test"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "next_department_id": {
+                                            "type": "integer",
+                                            "example": 3
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No department or no tests found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No department found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/zakplay/test/get-by-department_id": {
             "get": {
                 "tags": [

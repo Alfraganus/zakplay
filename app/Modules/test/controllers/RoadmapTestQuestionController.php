@@ -2,6 +2,8 @@
 namespace App\Modules\test\controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\test\models\Department;
+use App\Modules\test\models\RoadmapTest;
 use App\Modules\test\service\RoadmapTestQuestionService;
 use App\Modules\test\service\RoadmapTestQuestionUpdateService;
 use Illuminate\Http\Request;
@@ -24,6 +26,54 @@ class RoadmapTestQuestionController extends Controller
     {
         return $this->testQuestionService->getAllQuestionsByTestId($request);
     }
+
+    public function getNextTest()
+    {
+        $departments = Department::withoutGlobalScope('active')->get();
+        $currentDepartment = Department::query()->where('is_next_one',1)->first();
+
+        if (!$currentDepartment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No department found'
+            ], 404);
+        }
+
+        $tests = RoadmapTest::where('department_id', $currentDepartment->id)->get();
+
+        if ($tests->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No tests found for the current department'
+            ], 404);
+        }
+
+        $selectedTest = $tests->random();
+
+        $nextDepartment = Department::where('priority_number', '>', $currentDepartment->priority_number)
+            ->orderBy('priority_number')
+            ->first();
+
+        if (!$nextDepartment) {
+            $nextDepartment = Department::orderBy('priority_number')->first();
+        }
+
+        foreach ($departments as $department) {
+            $department->is_next_one = false;
+            $department->save();
+        }
+
+        if ($nextDepartment) {
+            $nextDepartment->is_next_one = true;
+            $nextDepartment->save();
+        }
+        return response()->json([
+            'success' => true,
+            'selected_test' => $this->testQuestionService->getQuestionByTestId($selectedTest->id),
+            'next_department_id' => $nextDepartment->id ?? null
+        ]);
+    }
+
     public function getSingleQuestion(Request $request)
     {
         return $this->testQuestionService->getTestQuestionByTestId($request);

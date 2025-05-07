@@ -151,4 +151,9 @@ class RoadmapTestQuestionService
         return response()->json($response);
     }
 
+    public function getQuestionByTestId($testId)
+    {
+        return $this->repository->getByTestId($testId)->get();
+    }
+
 }

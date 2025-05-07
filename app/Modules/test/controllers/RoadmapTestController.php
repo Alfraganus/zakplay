@@ -4,6 +4,7 @@ namespace App\Modules\test\controllers;
 use App\Helpers\MultiLanguageModelService;
 use App\Http\Controllers\Controller;
 use App\Modules\Roadmap\roadmapLesson\models\RoadmapLesson;
+use App\Modules\test\models\Department;
 use App\Modules\test\models\RoadmapTest;
 use App\Modules\test\repository\RoadmapTestRepository;
 use App\Modules\test\service\RoadmapTestCreateService;
@@ -37,10 +38,6 @@ class RoadmapTestController extends Controller
         );
     }
 
-    public function getTest()
-    {
-
-    }
 
     public function getAllTestByDepartmentId(Request $request)
     {

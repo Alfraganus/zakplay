@@ -11,6 +11,7 @@ class Ads extends Model
         'department_id',
         'title',
         'is_active',
+        'view_count',
         'ad_list'
     ];
 

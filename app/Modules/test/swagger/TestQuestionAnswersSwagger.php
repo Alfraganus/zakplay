@@ -13,7 +13,7 @@ namespace App\Modules\test\swagger;
  *         @OA\JsonContent(
  *             type="object",
  *             @OA\Property(property="test_id", type="integer", example=2),
- *             @OA\Property(property="name", type="string", example="Alfra"),
+ *             @OA\Property(property="fullname", type="string", example="Alfra"),
  *             @OA\Property(property="phone", type="integer", example="998995556677"),
  *             @OA\Property(
  *                 property="test_answers",

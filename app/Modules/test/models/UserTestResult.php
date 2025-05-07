@@ -17,6 +17,7 @@ class UserTestResult extends Model
         'device_id',
         'is_passed',
         'average_time',
+        'leaderboard_id',
     ];
 
     public function user()

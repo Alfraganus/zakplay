@@ -3,8 +3,11 @@
 namespace App\Modules\test\service;
 
 use App\Models\DeviceToken;
+use App\Models\Leaderboard;
+use App\Models\PlatformUser;
 use App\Models\Setting;
 use App\Models\User;
+use App\Modules\test\models\RoadmapTest;
 use App\Modules\test\models\RoadmapTestQuestion;
 use App\Modules\test\models\UserTestResult;
 use App\Modules\test\repository\RoadmapTestAnswersRepository;
@@ -42,13 +45,13 @@ class RoadmapTestSubmitService
         $this->roadmapTestRepository = $roadmapTestRepository;
     }
 
-    private static function getUserData(Request $request): User
+    private static function getUserData(Request $request): PlatformUser
     {
-        $user = User::firstOrNew(
-            ['phone_number' => $request->input('phone')]
+        $user = PlatformUser::firstOrNew(
+            ['phone' => $request->input('phone')]
         );
 
-        $user->name = $request->input('name');
+        $user->fullname = $request->input('fullname');
         $user->save();
 
         return $user;
@@ -59,7 +62,7 @@ class RoadmapTestSubmitService
     {
         $validator = Validator::make($request->all(), [
             'test_id' => 'required|integer|exists:roadmap_test,id',
-            'name' => 'required|string|max:255',
+            'fullname' => 'required|string|max:255',
             'phone' => 'required|numeric|digits_between:9,15',
             'test_answers' => 'required|array|min:1',
             'test_answers.*.question_id' => 'required|integer|exists:roadmap_test_questions,id',
@@ -111,7 +114,16 @@ class RoadmapTestSubmitService
             ->count();
         $isUserPassed = $testQuestionsCount == $correctAnswers;
 
-        $history = UserTestResult::query()->insert([
+        $leaderboard = Leaderboard::where('finish_date', '>=', date('Y-m-d'))
+        ->where(function ($query) use ($test_id) {
+            $query->where('test_id', $test_id)
+            ->orWhere('test_type', Leaderboard::ALL_TEST);
+        })
+            ->first();
+
+        $leaderboard_id = $leaderboard ? $leaderboard->id : null;
+
+         UserTestResult::query()->insert([
             'user_id' =>self::getUserData($request)->id,
             'test_id' => $test_id,
             'test_result' => $correctAnswers,
@@ -120,7 +132,13 @@ class RoadmapTestSubmitService
             'device_id' => $request->header('device_id') ?? null,
             'is_passed' => $isUserPassed,
             'average_time' => $request->input('average_time'),
+            'leaderboard_id' =>$leaderboard_id,
         ]);
+
+        $roadmapTest = RoadmapTest::find($test_id);
+        if ($roadmapTest) {
+            $roadmapTest->increment('used_times');
+        }
 
         return Response()->json([
             'msg' => 'Answers have been recorded successfully!',

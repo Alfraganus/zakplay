@@ -5,6 +5,118 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/dashboard/user-counts": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get counts of Tablets, Drivers, and RoadmapTests",
+                "description": "Returns the total number of Tablets, Drivers, and RoadmapTests",
+                "operationId": "858b3f24f64d0dcda9f135c66cc25906",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tablet_count": {
+                                            "type": "integer",
+                                            "example": 25
+                                        },
+                                        "driver_count": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "roadmap_test_count": {
+                                            "type": "integer",
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dashboard/weekly-test-stats": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get weekly test stats by department",
+                "operationId": "fbeef4216d5980dd27b609f842a66f5f",
+                "parameters": [
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date of the range (optional, defaults to current week start)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-08-12"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date of the range (optional, defaults to current week end)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-08-18"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "department_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "range": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "2024-08-12"
+                                            }
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": {
+                                                "Monday": 5,
+                                                "Tuesday": 2,
+                                                "Wednesday": 0,
+                                                "Thursday": 3,
+                                                "Friday": 7,
+                                                "Saturday": 1,
+                                                "Sunday": 0
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/api/drivers": {
             "get": {
                 "tags": [
@@ -192,6 +304,200 @@
                     },
                     "404": {
                         "description": "Driver not found"
+                    }
+                }
+            }
+        },
+        "/api/leaderboards": {
+            "get": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Get all leaderboards",
+                "operationId": "46160af8011eabf10c1b92e020120178",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Create a new leaderboard",
+                "operationId": "4e1e0708543efc317952a26daab77588",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "start_date",
+                                    "finish_date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "finish_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "test_type": {
+                                        "type": "string"
+                                    },
+                                    "test_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/api/leaderboards/{id}": {
+            "get": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Get a single leaderboard",
+                "operationId": "2bbae21676ce8ad0356bdd4660dc22b8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Update a leaderboard",
+                "operationId": "593f39ab188d1c7d328df60f94aca667",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "finish_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "test_type": {
+                                        "type": "string"
+                                    },
+                                    "test_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Delete a leaderboard",
+                "operationId": "6f46cf5f5230dd4076fea3425d6a1ead",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/leaderboards/{id}/results": {
+            "get": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Get all test results by leaderboard ID",
+                "operationId": "8a83c19c299f46ccb273734a1d3d82b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Leaderboard not found"
                     }
                 }
             }
@@ -876,7 +1182,7 @@
                                         "type": "integer",
                                         "example": 2
                                     },
-                                    "name": {
+                                    "fullname": {
                                         "type": "string",
                                         "example": "Alfra"
                                     },
@@ -1656,6 +1962,14 @@
         {
             "name": "Drivers",
             "description": "Driver management endpoints"
+        },
+        {
+            "name": "Leaderboard",
+            "description": "API Endpoints for managing leaderboards"
+        },
+        {
+            "name": "Dashboard",
+            "description": "Dashboard"
         },
         {
             "name": "Ads",

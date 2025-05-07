@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\LeaderboardController;
 use App\Http\Controllers\Api\TabletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +20,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('drivers', DriverController::class);
 });
 
+Route::apiResource('leaderboards',  LeaderboardController::class);
+Route::get('/leaderboards/{id}/results', [LeaderboardController::class, 'getResults']);
 
+Route::get('/dashboard/user-counts', [DashboardController::class, 'getCounts']);
+Route::get('/dashboard/weekly-test-stats', [DashboardController::class, 'getWeeklyTestStats']);
 require base_path('app/Modules/test/Routes.php');

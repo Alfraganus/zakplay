@@ -122,8 +122,11 @@ class DashboardController extends Controller
         // Populate the result array with actual data from the query
         foreach ($data as $item) {
             $dayName = $item->day;
-            $department = DB::table('department')->where('id', $item->id)->first()->department_name_; // Get the department name
-            $result[$department][$dayName] = $item->total;
+
+            // Safely fetch the department name, defaulting to 'Unknown' if not found
+            $departmentName = optional(DB::table('department')->where('id', $item->id)->first())->department_name_ ?? 'Unknown';
+
+            $result[$departmentName][$dayName] = $item->total;
         }
 
         return response()->json([
@@ -132,6 +135,7 @@ class DashboardController extends Controller
             'data' => $result,
         ]);
     }
+
 
 
 

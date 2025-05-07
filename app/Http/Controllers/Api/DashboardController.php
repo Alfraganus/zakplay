@@ -111,7 +111,7 @@ class DashboardController extends Controller
         $result = [];
 
         // Populate initial result structure for departments, if not found in data
-        $departments = DB::table('department')->get(); // Assuming departments are stored in a 'departments' table
+        $departments = DB::table('department')->get(); // Assuming departments are stored in a 'department' table
         foreach ($departments as $department) {
             $result[$department->department_name_] = [];
             foreach ($weekDays as $day) {
@@ -124,7 +124,7 @@ class DashboardController extends Controller
             $dayName = $item->day;
 
             // Safely fetch the department name, defaulting to 'Unknown' if not found
-            $departmentName = optional(DB::table('department')->where('id', $item->id)->first())->department_name_ ?? 'Unknown';
+            $departmentName = optional(DB::table('department')->where('id', $item->department_id)->first())->department_name_ ?? 'Unknown';
 
             $result[$departmentName][$dayName] = $item->total;
         }

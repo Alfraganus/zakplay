@@ -130,7 +130,6 @@ class DashboardController extends Controller
         }
 
         return response()->json([
-            'department_id' => $departmentId,
             'range' => [$startDate->toDateString(), $endDate->toDateString()],
             'data' => $result,
         ]);

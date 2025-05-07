@@ -45,7 +45,7 @@ class RoadmapTestSubmitService
         $this->roadmapTestRepository = $roadmapTestRepository;
     }
 
-    private static function getUserData(Request $request): PlatformUser
+    public static function getUserData(Request $request): PlatformUser
     {
         $user = PlatformUser::firstOrNew(
             ['phone' => $request->input('phone')]
@@ -142,7 +142,8 @@ class RoadmapTestSubmitService
 
         return Response()->json([
             'msg' => 'Answers have been recorded successfully!',
-            'is_passed' => $isUserPassed,
+            'is_passed' => UserTestResult::getUsersRank($request, $test_id),
+            'user_rank' => $isUserPassed,
             'correctAnswers' => $correctAnswers,
         ]);
     }

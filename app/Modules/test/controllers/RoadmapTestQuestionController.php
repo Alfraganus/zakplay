@@ -69,7 +69,11 @@ class RoadmapTestQuestionController extends Controller
         }
         return response()->json([
             'success' => true,
-            'selected_test' => $this->testQuestionService->getQuestionByTestId($selectedTest->id),
+            'selected_test' =>
+            [
+                'test_info'=> RoadmapTest::with('ad')->find($selectedTest->id),
+                'test_content'=> $this->testQuestionService->getQuestionByTestId($selectedTest->id),
+            ],
             'next_department_id' => $nextDepartment->id ?? null
         ]);
     }

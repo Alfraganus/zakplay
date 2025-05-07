@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\LeaderboardController;
@@ -21,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::apiResource('leaderboards',  LeaderboardController::class);
+Route::apiResource('car-models', CarsController::class);
+Route::get('car-colors', [CarsController::class, 'getCarColors']);
 Route::get('/leaderboards/{id}/results', [LeaderboardController::class, 'getResults']);
 
 Route::get('/dashboard/user-counts', [DashboardController::class, 'getCounts']);

@@ -24,4 +24,5 @@ class Driver extends Model
     {
         return $this->hasMany(Tablet::class);
     }
+
 }

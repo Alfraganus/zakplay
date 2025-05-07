@@ -165,4 +165,18 @@ class DriverController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/drivers/models",
+     *     summary="List all unique car models used by drivers",
+     *     tags={"Drivers"},
+     *     @OA\Response(response=200, description="List of unique car models")
+     * )
+     */
+    public function listModels()
+    {
+        $models = Driver::select('car_model')->distinct()->pluck('car_model');
+        return response()->json($models, Response::HTTP_OK);
+    }
 }

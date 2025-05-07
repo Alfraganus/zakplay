@@ -5,6 +5,165 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/car-models": {
+            "get": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Get all car models",
+                "operationId": "d5c611f608568e2bd3b02dee3aa0b088",
+                "responses": {
+                    "200": {
+                        "description": "List of car models"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Create a new car model",
+                "operationId": "401c8a5c9142f8d9e6a8b909d217c918",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "brand": {
+                                        "type": "string",
+                                        "example": "Chevrolet"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Cobalt"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Car model created"
+                    }
+                }
+            }
+        },
+        "/api/car-models/{id}": {
+            "get": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Get a specific car model",
+                "operationId": "9516c1ab1c354f883836be356438a790",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car model found"
+                    },
+                    "404": {
+                        "description": "Car model not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Update a car model",
+                "operationId": "7c523a664e2b4591f4cf63f7090205a7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "brand": {
+                                        "type": "string",
+                                        "example": "Kia"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "K5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Car model updated"
+                    },
+                    "404": {
+                        "description": "Car model not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Delete a car model",
+                "operationId": "ffd3fd8f8f40ceb7b7a17ce3f5961c3d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car model deleted"
+                    },
+                    "404": {
+                        "description": "Car model not found"
+                    }
+                }
+            }
+        },
+        "/api/car-colors": {
+            "get": {
+                "tags": [
+                    "Car Models"
+                ],
+                "summary": "Get all car colors in Uzbek",
+                "operationId": "43c5b2acbf639f255bf58d61c47890fc",
+                "responses": {
+                    "200": {
+                        "description": "List of car colors"
+                    }
+                }
+            }
+        },
         "/api/dashboard/user-counts": {
             "get": {
                 "tags": [
@@ -304,6 +463,20 @@
                     },
                     "404": {
                         "description": "Driver not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/models": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "List all unique car models used by drivers",
+                "operationId": "db9f7cc292a6471e8b9f7eeb0d38d5ad",
+                "responses": {
+                    "200": {
+                        "description": "List of unique car models"
                     }
                 }
             }
@@ -2028,6 +2201,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Car Models",
+            "description": "API Endpoints for Car Models"
+        },
         {
             "name": "Drivers",
             "description": "Driver management endpoints"

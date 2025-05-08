@@ -24,7 +24,7 @@ Route::apiResource('drivers', DriverController::class);
 Route::apiResource('leaderboards',  LeaderboardController::class);
 Route::apiResource('car-models', CarsController::class);
 Route::get('car-colors', [CarsController::class, 'getCarColors']);
-Route::post('/drivers/by-pin', [DriverController::class, 'getByPincode ']);
+Route::post('/drivers/by-pin', [DriverController::class, 'getByPincode']);
 Route::get('/leaderboards/{id}/results', [LeaderboardController::class, 'getResults']);
 
 Route::get('/dashboard/user-counts', [DashboardController::class, 'getCounts']);

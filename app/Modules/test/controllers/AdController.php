@@ -35,6 +35,7 @@ class AdController extends Controller
         $model->fill($request->only([
             'department_id',
             'title',
+            'is_active',
         ]));
 
         $model->save();

@@ -52,6 +52,7 @@ class LeaderboardController extends Controller
         $validated = $request->validate([
             'start_date' => 'required|date',
             'finish_date' => 'required|date',
+            'name' =>        'required|string',
             'test_type' => 'required|string',
             'test_id' => 'required|exists:roadmap_test,id',
         ]);

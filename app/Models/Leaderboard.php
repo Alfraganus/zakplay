@@ -17,6 +17,7 @@ class Leaderboard extends Model
     const SPECIAL_TEST = 2;
 
     protected $fillable = [
+        'name',
         'start_date',
         'finish_date',
         'is_active',
@@ -26,7 +27,6 @@ class Leaderboard extends Model
 
     protected $dates = [
         'start_date',
-        'name',
         'finish_date',
         'deleted_at',
     ];

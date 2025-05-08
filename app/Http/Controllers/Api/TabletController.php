@@ -12,7 +12,7 @@ class TabletController extends Controller
     // GET /api/tablets
     public function index()
     {
-        return response()->json(Tablet::all(), Response::HTTP_OK);
+        return response()->json(Tablet::with('driver')->get(), Response::HTTP_OK);
     }
 
     // POST /api/tablets
@@ -34,7 +34,7 @@ class TabletController extends Controller
     // GET /api/tablets/{id}
     public function show($id)
     {
-        $tablet = Tablet::find($id);
+        $tablet = Tablet::with('driver')->find($id);
         return response()->json($tablet, Response::HTTP_OK);
     }
 

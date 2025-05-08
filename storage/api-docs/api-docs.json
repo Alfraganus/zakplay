@@ -1766,8 +1766,8 @@
                                 "required": [
                                     "department_id",
                                     "title",
-                                    "ad_list_en",
-                                    "ad_list_ru"
+                                    "ad_uz",
+                                    "ad_ru"
                                 ],
                                 "properties": {
                                     "id": {
@@ -1787,11 +1787,11 @@
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "ad_list_en": {
+                                    "ad_uz": {
                                         "description": "Media file for English version",
                                         "type": "file"
                                     },
-                                    "ad_list_ru": {
+                                    "ad_ru": {
                                         "description": "Media file for Russian version",
                                         "type": "file"
                                     }

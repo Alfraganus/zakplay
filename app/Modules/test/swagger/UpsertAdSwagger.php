@@ -13,7 +13,7 @@ namespace App\Modules\test\swagger;
  *         @OA\MediaType(
  *             mediaType="multipart/form-data",
  *             @OA\Schema(
- *                 required={"department_id", "title", "ad_list_en", "ad_list_ru"},
+ *                 required={"department_id", "title", "ad_uz", "ad_ru"},
  *                 @OA\Property(
  *                     property="id",
  *                     type="integer",
@@ -36,12 +36,12 @@ namespace App\Modules\test\swagger;
  *                     description="Whether the ad is active"
  *                 ),
  *                 @OA\Property(
- *                     property="ad_list_en",
+ *                     property="ad_uz",
  *                     type="file",
  *                     description="Media file for English version"
  *                 ),
  *                 @OA\Property(
- *                     property="ad_list_ru",
+ *                     property="ad_ru",
  *                     type="file",
  *                     description="Media file for Russian version"
  *                 )

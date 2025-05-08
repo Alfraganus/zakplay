@@ -41,8 +41,8 @@ class AdController extends Controller
 
         $adList = [];
 
-        foreach (['en', 'ru'] as $lang) {
-            $inputName = "ad_list_$lang";
+        foreach (['uz', 'ru'] as $lang) {
+            $inputName = "ad_$lang";
 
             if ($request->hasFile($inputName)) {
                 $file = $request->file($inputName);

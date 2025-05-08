@@ -10,7 +10,7 @@ class MultiLanguageModelService
 {
     public static function roadmapGlobalInsert(Request $request, $modelClass, $fields = [], $attachment_name = null)
     {
-        $model = $request->input('id') ? $modelClass::find($request->input('id')) : new $modelClass();
+        $model = $request->input('id') ? $modelClass::withoutGlobalScope('active')->find($request->input('id')) : new $modelClass();
         foreach ($fields as $field) {
             $model->setTranslation($field . "_", $request->input('language'), $request->input($field));
         }

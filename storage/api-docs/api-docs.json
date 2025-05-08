@@ -295,10 +295,21 @@
                 ],
                 "summary": "Create a new driver",
                 "operationId": "829ed7a657b54c9727b94e7b814c2497",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "fullname",
@@ -336,6 +347,10 @@
                                     "car_plate_number": {
                                         "type": "string",
                                         "example": "01A123BC"
+                                    },
+                                    "image": {
+                                        "description": "Driver's image",
+                                        "type": "file"
                                     }
                                 },
                                 "type": "object"
@@ -460,6 +475,42 @@
                 "responses": {
                     "200": {
                         "description": "Driver deleted"
+                    },
+                    "404": {
+                        "description": "Driver not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/by-pin": {
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get driver by pincode",
+                "operationId": "f5f9e268cf6dde98279fabab3b01ce25",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pincode"
+                                ],
+                                "properties": {
+                                    "pincode": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Driver details"
                     },
                     "404": {
                         "description": "Driver not found"

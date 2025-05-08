@@ -36,20 +36,35 @@ class DriverController extends Controller
      *     tags={"Drivers"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
-     *             required={"fullname", "date_of_brith", "car_model", "car_color", "car_plate_number"},
-     *             @OA\Property(property="fullname", type="string", example="Ali Valiyev"),
-     *             @OA\Property(property="date_of_brith", type="string", format="date", example="1990-01-01"),
-     *             @OA\Property(property="login", type="string", example="ali123"),
-     *             @OA\Property(property="pincode", type="string", example="123456"),
-     *             @OA\Property(property="car_model", type="integer", example=1),
-     *             @OA\Property(property="car_color", type="integer", example=2),
-     *             @OA\Property(property="car_plate_number", type="string", example="01A123BC")
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"fullname", "date_of_brith", "car_model", "car_color", "car_plate_number"},
+     *                 @OA\Property(property="fullname", type="string", example="Ali Valiyev"),
+     *                 @OA\Property(property="date_of_brith", type="string", format="date", example="1990-01-01"),
+     *                 @OA\Property(property="login", type="string", example="ali123"),
+     *                 @OA\Property(property="pincode", type="string", example="123456"),
+     *                 @OA\Property(property="car_model", type="integer", example=1),
+     *                 @OA\Property(property="car_color", type="integer", example=2),
+     *                 @OA\Property(property="car_plate_number", type="string", example="01A123BC"),
+     *                 @OA\Property(
+     *                     property="image",
+     *                     type="file",
+     *                     description="Driver's image"
+     *                 )
+     *             )
      *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="Accept",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(type="string", default="application/json")
      *     ),
      *     @OA\Response(response=201, description="Driver created")
      * )
      */
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -62,8 +77,15 @@ class DriverController extends Controller
             'car_plate_number' => 'required|string|max:255',
         ]);
 
-        $driver = Driver::create($validated);
-        return response()->json($driver, Response::HTTP_CREATED);
+        $model = Driver::create($validated);
+        if ($request->file('image')) {
+            if ($model->hasMedia(Driver::MEDIA_COLLECTION)) {
+                $model->clearMediaCollection(Driver::MEDIA_COLLECTION);
+            }
+            $model->addMedia($request->file('image'))
+                ->toMediaCollection(Driver::MEDIA_COLLECTION);
+        }
+        return response()->json($model, Response::HTTP_CREATED);
     }
 
     /**
@@ -165,6 +187,45 @@ class DriverController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
     }
+    /**
+     * @OA\Post(
+     *     path="/api/drivers/by-pin",
+     *     summary="Get driver by pincode",
+     *     tags={"Drivers"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"pincode"},
+     *             @OA\Property(property="pincode", type="string", example="1234")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Driver details"),
+     *     @OA\Response(response=404, description="Driver not found"),
+     *     @OA\Header(
+     *         header="Accept",
+     *         description="Expected response format",
+     *         @OA\Schema(type="string", default="application/json")
+     *     )
+     * )
+     */
+    public function getByPincode(Request $request)
+    {
+        $driver = Driver::with('carModel')->where('pincode', $request->pincode)->first();
+
+        if (!$driver) {
+            return response()->json(['message' => 'Driver not found'], 404);
+        }
+
+        return response()->json([
+            'fullname' => $driver->fullname,
+            'login' => $driver->login,
+            'car_color' => $driver->car_color_name,
+            'car_model' => $driver->carModel->name ?? null,
+            'car_model_brand' => $driver->carModel->brand ?? null,
+            'car_plate_number' => $driver->car_plate_number,
+        ]);
+    }
+
 
     /**
      * @OA\Get(

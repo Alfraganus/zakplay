@@ -1,12 +1,16 @@
 <?php
 namespace App\Models;
 
+use App\Helpers\MediaHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Driver extends Model
+class Driver extends Model implements HasMedia
 {
     use SoftDeletes;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'fullname',
@@ -17,12 +21,44 @@ class Driver extends Model
         'car_color',
         'car_plate_number',
     ];
-
+ const MEDIA_COLLECTION = 'driver_images';
     protected $dates = ['deleted_at'];
+
+
+    protected $appends = [
+        'fullUrlMedia',
+        'car_color_name',
+        'car_model_name',
+        'car_model_brand',
+    ];
+
+
+    public function getFullUrlMediaAttribute()
+    {
+        return MediaHelper::getMediaByCollection(self::MEDIA_COLLECTION,$this->id)[0] ?? null;
+    }
+    public function getCarColorNameAttribute(): ?string
+    {
+        return CarModel::$carColors[$this->car_color] ?? null;
+    }
+
+    public function getCarModelNameAttribute(): ?string
+    {
+        return $this->carModel->name ?? null;
+    }
+
+    public function getCarModelBrandAttribute(): ?string
+    {
+        return $this->carModel->brand ?? null;
+    }
 
     public function tablets()
     {
         return $this->hasMany(Tablet::class);
     }
 
+    public function carModel()
+    {
+        return $this->belongsTo(CarModel::class, 'car_model'); // assuming 'car_model' is the foreign key
+    }
 }

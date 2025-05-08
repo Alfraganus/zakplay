@@ -123,6 +123,7 @@ class LeaderboardController extends Controller
 
         $validated = $request->validate([
             'start_date' => 'sometimes|date',
+            'name' =>        'required|string',
             'finish_date' => 'sometimes|date',
             'test_type' => 'sometimes|string',
             'test_id' => 'sometimes|exists:roadmap_test,id',

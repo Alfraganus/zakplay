@@ -144,7 +144,7 @@ class DriverController extends Controller
                 'login' => 'nullable|string|max:255',
                 'pincode' => 'nullable|string|unique:drivers,pincode,' . $driver->id,
                 'car_model' => 'sometimes|required',
-                'car_color' => 'sometimes|required|integer',
+                'car_color' => 'sometimes|required|string',
                 'car_plate_number' => 'sometimes|required|string|max:255',
             ]);
 

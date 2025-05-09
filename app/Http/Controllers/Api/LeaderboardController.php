@@ -193,8 +193,7 @@ class LeaderboardController extends Controller
         $numberOfUsers = $results->count();
 
         return response()->json([
-            'leaderboard_id' => $id,
-            'leaderboard_name' => $leaderboard->name,
+            'leaderboard_id' => $leaderboard,
             'number_of_users' => $numberOfUsers,
             'results' => $results,
         ]);

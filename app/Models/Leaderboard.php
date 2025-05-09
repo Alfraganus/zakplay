@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Modules\test\models\RoadmapTest;
+use App\Modules\test\models\UserTestResult;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -44,5 +45,10 @@ class Leaderboard extends Model
     public function test()
     {
         return $this->belongsTo( RoadmapTest::class, 'test_id');
+    }
+
+    public function results()
+    {
+        return $this->hasMany(UserTestResult::class, 'leaderboard_id');
     }
 }

@@ -98,36 +98,42 @@ class DashboardController extends Controller
         $departments = DB::table('department')->where('is_active', 1)->get();
         $activeDepartmentIds = $departments->pluck('id')->toArray();
 
-        // Fetch statistics for the current week, filtered by active departments
+        // Fetch statistics for the current week, only for active departments
         $data = DB::table('roadmap_test')
             ->selectRaw('DAYNAME(created_at) as day, DAYOFWEEK(created_at) as day_of_week, department_id, COUNT(*) as total')
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereIn('department_id', $activeDepartmentIds)
+            ->whereIn('department_id', $activeDepartmentIds) // ✅ Only include tests from active departments
             ->groupByRaw('DAYNAME(created_at), DAYOFWEEK(created_at), department_id')
             ->orderByRaw('FIELD(day_of_week, 2, 3, 4, 5, 6, 7, 1)')
             ->get();
 
         $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
         $result = [];
 
-        // Initialize result with 0s for all active departments and weekdays
+        // ✅ Initialize result structure only for active departments
         foreach ($departments as $department) {
-            $result[$department->department_name_] = [
-                'department_id' => $department->id,
-                'days' => array_fill_keys($weekDays, 0),
-            ];
+            $result[$department->department_name_] = [];
+            foreach ($weekDays as $day) {
+                $result[$department->department_name_][$day] = 0;
+            }
         }
 
+        // Fill actual stats
         foreach ($data as $item) {
-            $department = $departments->firstWhere('id', $item->department_id);
-            if ($department) {
-                $result[$department->department_name_]['days'][$item->day] = $item->total;
+            $dayName = $item->day;
+            $departmentName = optional(
+                $departments->firstWhere('id', $item->department_id)
+            )->department_name_ ?? 'Unknown';
+
+            if ($departmentName !== 'Unknown') {
+                $result[$departmentName][$dayName] = $item->total;
             }
         }
 
         return response()->json([
             'range' => [$startDate->toDateString(), $endDate->toDateString()],
-            'data' => array_values($result),
+            'data' => $result,
         ]);
     }
 

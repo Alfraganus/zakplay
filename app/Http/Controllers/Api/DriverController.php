@@ -44,8 +44,8 @@ class DriverController extends Controller
      *                 @OA\Property(property="date_of_brith", type="string", format="date", example="1990-01-01"),
      *                 @OA\Property(property="login", type="string", example="ali123"),
      *                 @OA\Property(property="pincode", type="string", example="123456"),
-     *                 @OA\Property(property="car_model", type="integer", example=1),
-     *                 @OA\Property(property="car_color", type="integer", example=2),
+     *                 @OA\Property(property="car_model", type="string", example=1),
+     *                 @OA\Property(property="car_color", type="string", example=2),
      *                 @OA\Property(property="car_plate_number", type="string", example="01A123BC"),
      *                 @OA\Property(
      *                     property="image",
@@ -72,8 +72,8 @@ class DriverController extends Controller
             'date_of_brith' => 'required|date',
             'login' => 'nullable|string|max:255',
             'pincode' => 'nullable|string|unique:drivers,pincode|max:255',
-            'car_model' => 'required|integer',
-            'car_color' => 'required|integer',
+            'car_model' => 'required|string',
+            'car_color' => 'required|string',
             'car_plate_number' => 'required|string|max:255',
         ]);
 
@@ -124,8 +124,8 @@ class DriverController extends Controller
      *             @OA\Property(property="date_of_brith", type="string", format="date", example="1995-02-02"),
      *             @OA\Property(property="login", type="string", example="new_login"),
      *             @OA\Property(property="pincode", type="string", example="654321"),
-     *             @OA\Property(property="car_model", type="integer", example=2),
-     *             @OA\Property(property="car_color", type="integer", example=4),
+     *             @OA\Property(property="car_model", type="string", example=2),
+     *             @OA\Property(property="car_color", type="string", example=4),
      *             @OA\Property(property="car_plate_number", type="string", example="01X456YZ")
      *         )
      *     ),
@@ -143,7 +143,7 @@ class DriverController extends Controller
                 'date_of_brith' => 'sometimes|required|date',
                 'login' => 'nullable|string|max:255',
                 'pincode' => 'nullable|string|unique:drivers,pincode,' . $driver->id,
-                'car_model' => 'sometimes|required|integer',
+                'car_model' => 'sometimes|required',
                 'car_color' => 'sometimes|required|integer',
                 'car_plate_number' => 'sometimes|required|string|max:255',
             ]);

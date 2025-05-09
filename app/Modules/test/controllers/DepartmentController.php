@@ -41,13 +41,13 @@ class DepartmentController extends Controller
     public function getAllDepartments()
     {
         return Response()->json([
-            'data'=> Department::withCount('test')->get()
+            'data'=> Department::withoutGlobalScope('active')->withCount('test')->get()
         ]);
     }
 
     public function findById($id)
     {
-        $model =  Department::query()->find($id);
+        $model =  Department::query()->withoutGlobalScope('active')->find($id);
         if(empty($model)) {
            return Response()->json([
                'error'=>"Result not found"

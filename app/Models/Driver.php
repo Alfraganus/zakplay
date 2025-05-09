@@ -27,29 +27,12 @@ class Driver extends Model implements HasMedia
 
     protected $appends = [
         'fullUrlMedia',
-        'car_color_name',
-        'car_model_name',
-        'car_model_brand',
     ];
 
 
     public function getFullUrlMediaAttribute()
     {
         return MediaHelper::getMediaByCollection(self::MEDIA_COLLECTION,$this->id)[0] ?? null;
-    }
-    public function getCarColorNameAttribute(): ?string
-    {
-        return CarModel::$carColors[$this->car_color] ?? null;
-    }
-
-    public function getCarModelNameAttribute(): ?string
-    {
-        return $this->carModel->name ?? null;
-    }
-
-    public function getCarModelBrandAttribute(): ?string
-    {
-        return $this->carModel->brand ?? null;
     }
 
     public function tablets()

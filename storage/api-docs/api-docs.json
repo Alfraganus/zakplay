@@ -337,11 +337,11 @@
                                         "example": "123456"
                                     },
                                     "car_model": {
-                                        "type": "integer",
+                                        "type": "string",
                                         "example": 1
                                     },
                                     "car_color": {
-                                        "type": "integer",
+                                        "type": "string",
                                         "example": 2
                                     },
                                     "car_plate_number": {
@@ -430,11 +430,11 @@
                                         "example": "654321"
                                     },
                                     "car_model": {
-                                        "type": "integer",
+                                        "type": "string",
                                         "example": 2
                                     },
                                     "car_color": {
-                                        "type": "integer",
+                                        "type": "string",
                                         "example": 4
                                     },
                                     "car_plate_number": {

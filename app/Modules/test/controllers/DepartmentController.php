@@ -61,7 +61,7 @@ class DepartmentController extends Controller
 
     public function delete($id)
     {
-        $model = Department::query()->find($id);
+        $model = Department::query()->withoutGlobalScope('active')->find($id);
         if (!$model) {
             return response()->json([
                 'success' => false,

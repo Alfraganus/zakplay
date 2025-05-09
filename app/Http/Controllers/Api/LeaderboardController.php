@@ -56,7 +56,7 @@ class LeaderboardController extends Controller
             'finish_date' => 'required|date',
             'name' =>        'required|string',
             'test_type' => 'required|string',
-            'test_id' => 'required|exists:roadmap_test,id',
+            'test_id' => 'exists:roadmap_test,id',
         ]);
 
         $leaderboard = Leaderboard::create($validated);

@@ -97,8 +97,12 @@ class DashboardController extends Controller
     {
         $departmentId = $request->input('department_id');
 
-        $startDate = now()->startOfWeek();
-        $endDate = now()->endOfWeek();
+        $startDate = $request->input('start_date') ?? now()->startOfWeek();
+        $endDate = $request->input('end_date') ?? now()->endOfWeek();
+
+
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();
 
         // Get only active departments
         $departments = Department::where('is_active', 1)->get();

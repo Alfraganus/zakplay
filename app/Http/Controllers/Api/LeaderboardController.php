@@ -127,6 +127,7 @@ class LeaderboardController extends Controller
             'start_date' => 'sometimes|date',
             'name' =>        'required|string',
             'finish_date' => 'sometimes|date',
+            'is_active' =>  'sometimes|boolean',
             'test_type' => 'sometimes|string',
             'test_id' => 'sometimes|exists:roadmap_test,id',
         ]);

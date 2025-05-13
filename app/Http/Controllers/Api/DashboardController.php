@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Driver;
 use App\Models\Tablet;
+use App\Modules\test\models\Department;
 use App\Modules\test\models\RoadmapTest;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Expression;
@@ -95,7 +96,7 @@ class DashboardController extends Controller
         $endDate = now()->endOfWeek();
 
         // Get only active departments
-        $departments = DB::table('department')->where('is_active', 1)->get();
+        $departments = Department::where('is_active', 1)->get();
         $activeDepartmentIds = $departments->pluck('id')->toArray();
 
         // Fetch statistics for the current week, only for active departments
@@ -111,7 +112,6 @@ class DashboardController extends Controller
 
         $result = [];
 
-        // ✅ Initialize result structure only for active departments
         foreach ($departments as $department) {
             $result[$department->department_name_] = [];
             foreach ($weekDays as $day) {

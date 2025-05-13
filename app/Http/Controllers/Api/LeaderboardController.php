@@ -25,7 +25,7 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        $leaderboards = Leaderboard::withoutGlobalScope('active')->withCount('results')->get();
+        $leaderboards = Leaderboard::withoutGlobalScope('active')->with('test')->withCount('results')->get();
 
         return response()->json($leaderboards);
     }
@@ -81,7 +81,7 @@ class LeaderboardController extends Controller
      */
     public function show($id)
     {
-        $leaderboard = Leaderboard::withoutGlobalScope('active')->find($id);
+        $leaderboard = Leaderboard::withoutGlobalScope('active')->with('test')->find($id);
 
         if (!$leaderboard) {
             return response()->json(['message' => 'Leaderboard not found'], 404);

@@ -42,6 +42,11 @@ class Leaderboard extends Model
     /**
      * Relationship to RoadmapTest
      */
+    public function getDepartmentIdAttribute()
+    {
+        return $this->test ? $this->test->department_id : null;
+    }
+
     public function test()
     {
         return $this->belongsTo( RoadmapTest::class, 'test_id');

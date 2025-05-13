@@ -38,7 +38,7 @@ class DashboardController extends Controller
         return response()->json([
             'tablet_count' => Tablet::count(),
             'driver_count' => Driver::count(),
-            'roadmap_test_count' => RoadmapTest::count(),
+            'roadmap_test_count' => RoadmapTest::where('is_active',1)->count(),
         ]);
     }
 

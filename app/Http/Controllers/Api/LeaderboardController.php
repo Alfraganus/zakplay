@@ -25,7 +25,7 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        $leaderboards = Leaderboard::withCount('results')->get();
+        $leaderboards = Leaderboard::withoutGlobalScope('active')->withCount('results')->get();
 
         return response()->json($leaderboards);
     }

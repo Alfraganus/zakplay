@@ -125,7 +125,7 @@ class LeaderboardController extends Controller
 
         $validated = $request->validate([
             'start_date'   => 'sometimes|date',
-            'name'         => 'required|string',
+            'name'         => 'sometimes|string',
             'finish_date'  => 'sometimes|date',
             'is_active'    => 'sometimes|boolean',
             'test_type'    => 'sometimes|string',

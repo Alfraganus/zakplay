@@ -2,6 +2,7 @@
 namespace App\Modules\test\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Ads extends Model
 {
@@ -17,6 +18,17 @@ class Ads extends Model
     protected $casts = [
         'ad_list' => 'array',
     ];
+
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
 
     public function department()
     {

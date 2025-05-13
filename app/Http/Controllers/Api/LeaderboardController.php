@@ -117,19 +117,19 @@ class LeaderboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::withoutGlobalScope('active')->find($id);
 
         if (!$leaderboard) {
             return response()->json(['message' => 'Leaderboard not found'], 404);
         }
 
         $validated = $request->validate([
-            'start_date' => 'sometimes|date',
-            'name' =>        'required|string',
-            'finish_date' => 'sometimes|date',
-            'is_active' =>  'sometimes|boolean',
-            'test_type' => 'sometimes|string',
-            'test_id' => 'sometimes|exists:roadmap_test,id',
+            'start_date'   => 'sometimes|date',
+            'name'         => 'required|string',
+            'finish_date'  => 'sometimes|date',
+            'is_active'    => 'sometimes|boolean',
+            'test_type'    => 'sometimes|string',
+            'test_id'      => 'sometimes|exists:roadmap_test,id',
         ]);
 
         $leaderboard->update($validated);

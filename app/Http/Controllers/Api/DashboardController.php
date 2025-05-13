@@ -35,10 +35,15 @@ class DashboardController extends Controller
      */
     public function getCounts(): JsonResponse
     {
+        $departments = Department::where('is_active', 1)->get();
+        $activeDepartmentIds = $departments->pluck('id')->toArray();
+
         return response()->json([
             'tablet_count' => Tablet::count(),
             'driver_count' => Driver::count(),
-            'roadmap_test_count' => RoadmapTest::where('is_active',1)->count(),
+            'roadmap_test_count' => RoadmapTest::where('is_active', 1)
+                ->whereIn('department_id', $activeDepartmentIds)
+                ->count(),
         ]);
     }
 

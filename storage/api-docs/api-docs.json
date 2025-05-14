@@ -2239,6 +2239,165 @@
                     }
                 }
             }
+        },
+        "/api/weather/current": {
+            "get": {
+                "tags": [
+                    "Weather"
+                ],
+                "summary": "Get current weather by city",
+                "description": "Returns the current weather data for a given city. Defaults to Tashkent.",
+                "operationId": "7e4d34b292dacb06cf49a2627898f0ea",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "City name to fetch weather for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Tashkent"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "location": {
+                                            "type": "object"
+                                        },
+                                        "current": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/weather/forecast": {
+            "get": {
+                "tags": [
+                    "Weather"
+                ],
+                "summary": "Get weather forecast",
+                "description": "Returns weather forecast data for a given city and number of days (1-10).",
+                "operationId": "22c6763c734ec881f5b26bf4591eb159",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "City name to fetch forecast for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Tashkent"
+                        }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "Number of days to get forecast for (max: 10)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Forecast returned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "location": {
+                                            "type": "object"
+                                        },
+                                        "forecast": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/weather/search": {
+            "get": {
+                "tags": [
+                    "Weather"
+                ],
+                "summary": "Search for cities",
+                "description": "Returns a list of cities matching the search query.",
+                "operationId": "6a5c78f1c7489fdb3989c3bb40c9712b",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Partial or full city name",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Tash"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of matching cities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            },
+                                            "region": {
+                                                "type": "string"
+                                            },
+                                            "lat": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "lon": {
+                                                "type": "number",
+                                                "format": "float"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2287,6 +2446,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Weather",
+            "description": "Weather"
         }
     ],
     "security": [

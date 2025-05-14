@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\LeaderboardController;
 use App\Http\Controllers\Api\TabletController;
+use App\Http\Controllers\Api\WeatherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use L5Swagger\Http\Controllers\SwaggerController;
@@ -29,4 +30,11 @@ Route::get('/leaderboards/{id}/results', [LeaderboardController::class, 'getResu
 
 Route::get('/dashboard/user-counts', [DashboardController::class, 'getCounts']);
 Route::get('/dashboard/weekly-test-stats', [DashboardController::class, 'getWeeklyTestStats']);
+
+
+Route::get('/weather/current', [WeatherController::class, 'currentWeather']);
+Route::get('/weather/forecast', [WeatherController::class, 'forecast']);
+Route::get('/weather/search', [WeatherController::class, 'search']);
+
+
 require base_path('app/Modules/test/Routes.php');

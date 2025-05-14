@@ -48,9 +48,10 @@ class AdController extends Controller
             if ($request->hasFile($inputName)) {
                 $file = $request->file($inputName);
                 $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('media/ads', $filename, 'public'); // stored in storage/app/public/media/ads
-
+                $file->storeAs('media/ads', $filename, 'public'); // stored in storage/app/public/media/ads
                 $adList[$lang] = "media/ads/$filename";
+            } elseif (is_string($request->input($inputName))) {
+                $adList[$lang] = $request->input($inputName);
             }
         }
 

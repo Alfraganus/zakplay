@@ -31,27 +31,33 @@ class AdController extends Controller
     public function upsertAds(Request $request)
     {
         $model = $request->input('id') ? Ads::find($request->input('id')) : new Ads();
+
         $adList = [];
 
-        foreach (['uz', 'ru'] as $lang) {
-            $inputName = "ad_$lang";
+        $hasUz = $request->hasFile('ad_uz') || !empty(trim($request->input('ad_uz')));
+        $hasRu = $request->hasFile('ad_ru') || !empty(trim($request->input('ad_ru')));
 
-            if ($request->hasFile($inputName)) {
-                $file = $request->file($inputName);
-                $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('media/ads', $filename, 'public'); // stored in storage/app/public/media/ads
-                $adList[$lang] = "media/ads/$filename";
-            } elseif (is_string($request->input($inputName))) {
-                $adList[$lang] = $request->input($inputName);
+        if (!$hasUz && !$hasRu) {
+            $model->ad_list = [];
+        } else {
+            foreach (['uz', 'ru'] as $lang) {
+                $inputName = "ad_$lang";
+
+                if ($request->hasFile($inputName)) {
+                    $file = $request->file($inputName);
+                    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('media/ads', $filename, 'public');
+                    $adList[$lang] = "media/ads/$filename";
+                } elseif (!empty(trim($request->input($inputName)))) {
+                    $adList[$lang] = trim($request->input($inputName));
+                }
             }
-        }
 
-        $model->fill($request->all());
-
-        if (!empty($adList)) {
             $model->ad_list = $adList;
-            $model->save();
         }
+
+        $model->fill($request->except(['ad_uz', 'ad_ru'])); // exclude raw file inputs
+        $model->save();
 
         return response()->json([
             'success' => true,

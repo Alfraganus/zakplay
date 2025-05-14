@@ -32,11 +32,7 @@ class AdController extends Controller
     {
         $model = $request->input('id') ? Ads::find($request->input('id')) : new Ads();
 
-        $model->fill($request->only([
-            'department_id',
-            'title',
-            'is_active',
-        ]));
+        $model->fill($request->all());
 
         $model->save();
 

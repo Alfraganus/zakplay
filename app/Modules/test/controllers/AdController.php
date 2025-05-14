@@ -31,11 +31,6 @@ class AdController extends Controller
     public function upsertAds(Request $request)
     {
         $model = $request->input('id') ? Ads::find($request->input('id')) : new Ads();
-
-        $model->fill($request->all());
-
-        $model->save();
-
         $adList = [];
 
         foreach (['uz', 'ru'] as $lang) {
@@ -50,6 +45,8 @@ class AdController extends Controller
                 $adList[$lang] = $request->input($inputName);
             }
         }
+
+        $model->fill($request->all());
 
         if (!empty($adList)) {
             $model->ad_list = $adList;

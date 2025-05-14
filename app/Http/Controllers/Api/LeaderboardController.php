@@ -183,7 +183,7 @@ class LeaderboardController extends Controller
      */
     public function getResults($id)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::with('test')->find($id);
 
         if (!$leaderboard) {
             return response()->json(['message' => 'Leaderboard not found'], 404);

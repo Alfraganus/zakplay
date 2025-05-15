@@ -65,7 +65,7 @@ class RoadmapTestQuestionController extends Controller
             ->first();
 
         if (!$nextDepartment) {
-            $nextDepartment = Department::orderBy('priority_number')->first();
+            $nextDepartment = Department::has('test')->orderBy('priority_number')->first();
         }
 
         foreach ($departments as $department) {

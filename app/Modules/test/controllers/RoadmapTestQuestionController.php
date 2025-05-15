@@ -29,7 +29,7 @@ class RoadmapTestQuestionController extends Controller
 
     public function getNextTest()
     {
-        $departments = Department::has('test')->get();
+      return  $departments = Department::has('test')->get();
         $currentDepartment = Department::query()->where('is_next_one',1)->first();
 
 

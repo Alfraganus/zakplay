@@ -29,14 +29,25 @@ class RoadmapTestQuestionController extends Controller
 
     public function getNextTest()
     {
-        $departments = Department::withoutGlobalScope('active')->get();
+        $departments = Department::get();
         $currentDepartment = Department::query()->where('is_next_one',1)->first();
 
+
+        $priority = 1;
+        foreach ($departments as $department) {
+            if (is_null($department->priority_number)) {
+                $department->priority_number = $priority++;
+                $department->save();
+            } else {
+                $priority = max($priority, $department->priority_number + 1);
+            }
+        }
+
         if (!$currentDepartment) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No department found'
-            ], 404);
+            $firstDepartment = Department::query()->orderBy('id','desc')->first();
+            $firstDepartment->is_next_one = true;
+            $firstDepartment->save();
+            $currentDepartment = $firstDepartment;
         }
 
         $tests = RoadmapTest::where('department_id', $currentDepartment->id)->get();

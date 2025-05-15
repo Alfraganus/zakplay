@@ -29,9 +29,10 @@ class RoadmapTestQuestionController extends Controller
 
     public function getNextTest()
     {
+        // Get departments that have at least one test
         $departments = Department::has('test')->get();
-        $currentDepartment = Department::has('test')->where('is_next_one',1)->first();
 
+        // Assign sequential priority_number to departments with null
         $priority = 1;
         foreach ($departments as $department) {
             if (is_null($department->priority_number)) {
@@ -42,13 +43,17 @@ class RoadmapTestQuestionController extends Controller
             }
         }
 
+        // Find the current department
+        $currentDepartment = $departments->firstWhere('is_next_one', 1);
+
+        // If no department is marked as next, use the last department
         if (!$currentDepartment) {
-            $firstDepartment = Department::has('test')->orderBy('id','desc')->first();
-            $firstDepartment->is_next_one = true;
-            $firstDepartment->save();
-            $currentDepartment = $firstDepartment;
+            $currentDepartment = $departments->sortByDesc('id')->first();
+            $currentDepartment->is_next_one = true;
+            $currentDepartment->save();
         }
 
+        // Get all tests for the current department
         $tests = RoadmapTest::where('department_id', $currentDepartment->id)->get();
 
         if ($tests->isEmpty()) {
@@ -60,33 +65,32 @@ class RoadmapTestQuestionController extends Controller
 
         $selectedTest = $tests->random();
 
-        $nextDepartment = Department::has('test')->where('priority_number', '>', $currentDepartment->priority_number)
-            ->orderBy('priority_number')
+        // Determine the next department
+        $nextDepartment = $departments
+            ->where('priority_number', '>', $currentDepartment->priority_number)
+            ->sortBy('priority_number')
             ->first();
 
         if (!$nextDepartment) {
-            $nextDepartment = Department::has('test')->orderBy('priority_number')->first();
+            $nextDepartment = $departments->sortBy('priority_number')->first();
         }
 
+        // Reset all is_next_one flags
         foreach ($departments as $department) {
-            $department->is_next_one = false;
+            $department->is_next_one = $department->id === optional($nextDepartment)->id;
             $department->save();
         }
 
-        if ($nextDepartment) {
-            $nextDepartment->is_next_one = true;
-            $nextDepartment->save();
-        }
         return response()->json([
             'success' => true,
-            'selected_test' =>
-            [
-                'test_info'=> RoadmapTest::with('ad')->find($selectedTest->id),
-                'test_content'=> $this->testQuestionService->getQuestionByTestId($selectedTest->id),
+            'selected_test' => [
+                'test_info' => RoadmapTest::with('ad')->find($selectedTest->id),
+                'test_content' => $this->testQuestionService->getQuestionByTestId($selectedTest->id),
             ],
             'next_department_id' => $nextDepartment->id ?? null
         ]);
     }
+
 
     public function getSingleQuestion(Request $request)
     {

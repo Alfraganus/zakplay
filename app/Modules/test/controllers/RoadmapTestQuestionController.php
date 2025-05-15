@@ -29,9 +29,8 @@ class RoadmapTestQuestionController extends Controller
 
     public function getNextTest()
     {
-      return  $departments = Department::has('test')->get();
+        $departments = Department::has('test')->get();
         $currentDepartment = Department::query()->where('is_next_one',1)->first();
-
 
         $priority = 1;
         foreach ($departments as $department) {
@@ -44,7 +43,7 @@ class RoadmapTestQuestionController extends Controller
         }
 
         if (!$currentDepartment) {
-            $firstDepartment = Department::query()->orderBy('id','desc')->first();
+            $firstDepartment = Department::query()->has('test')->orderBy('id','desc')->first();
             $firstDepartment->is_next_one = true;
             $firstDepartment->save();
             $currentDepartment = $firstDepartment;

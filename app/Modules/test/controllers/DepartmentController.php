@@ -31,11 +31,18 @@ class DepartmentController extends Controller
 
     public function upsertDepartment(Request $request)
     {
-        return MultiLanguageModelService::roadmapGlobalInsert(
+        $model = MultiLanguageModelService::roadmapGlobalInsert(
             $request,
             Department::class,
           []
         );
+        $priority = 1;
+        foreach (Department::get() as $department) {
+                $department->priority_number = $priority++;
+                $department->save();
+        }
+
+        return $model;
     }
 
     public function getAllDepartments()

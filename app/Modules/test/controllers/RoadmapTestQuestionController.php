@@ -34,12 +34,9 @@ class RoadmapTestQuestionController extends Controller
 
         $priority = 1;
         foreach ($departments as $department) {
-            if (is_null($department->priority_number)) {
                 $department->priority_number = $priority++;
                 $department->save();
-            } else {
-                $priority = max($priority, $department->priority_number + 1);
-            }
+
         }
 
         if (!$currentDepartment) {

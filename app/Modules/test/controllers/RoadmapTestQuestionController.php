@@ -29,10 +29,8 @@ class RoadmapTestQuestionController extends Controller
 
     public function getNextTest()
     {
-        // Get departments that have at least one test
         $departments = Department::has('test')->get();
 
-        // Assign sequential priority_number to departments with null
         $priority = 1;
         foreach ($departments as $department) {
             if (is_null($department->priority_number)) {
@@ -46,15 +44,13 @@ class RoadmapTestQuestionController extends Controller
         // Find the current department
         $currentDepartment = $departments->firstWhere('is_next_one', 1);
 
-        // If no department is marked as next, use the last department
         if (!$currentDepartment) {
             $currentDepartment = $departments->sortByDesc('id')->first();
             $currentDepartment->is_next_one = true;
             $currentDepartment->save();
         }
 
-        // Get all tests for the current department
-        $tests = RoadmapTest::where('department_id', $currentDepartment->id)->get();
+        $tests = RoadmapTest::where('department_id', $currentDepartment->id)->where('is_active',1)->get();
 
         if ($tests->isEmpty()) {
             return response()->json([

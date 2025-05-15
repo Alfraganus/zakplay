@@ -60,7 +60,7 @@ class RoadmapTestQuestionController extends Controller
 
         $selectedTest = $tests->random();
 
-        $nextDepartment = Department::where('priority_number', '>', $currentDepartment->priority_number)
+        $nextDepartment = Department::has('test')->where('priority_number', '>', $currentDepartment->priority_number)
             ->orderBy('priority_number')
             ->first();
 

@@ -37,7 +37,7 @@ class DepartmentController extends Controller
           []
         );
         $priority = 1;
-        foreach (Department::get() as $department) {
+        foreach (Department::has('test')->get() as $department) {
                 $department->priority_number = $priority++;
                 $department->save();
         }

@@ -43,7 +43,7 @@ class RoadmapTestQuestionController extends Controller
         }
 
         if (!$currentDepartment) {
-            $firstDepartment = Department::query()->has('test')->orderBy('id','desc')->first();
+            $firstDepartment = Department::has('test')->orderBy('id','desc')->first();
             $firstDepartment->is_next_one = true;
             $firstDepartment->save();
             $currentDepartment = $firstDepartment;

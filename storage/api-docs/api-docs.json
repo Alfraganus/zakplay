@@ -1563,14 +1563,6 @@
                                         "type": "integer",
                                         "example": 2
                                     },
-                                    "fullname": {
-                                        "type": "string",
-                                        "example": "Alfra"
-                                    },
-                                    "phone": {
-                                        "type": "integer",
-                                        "example": "998995556677"
-                                    },
                                     "test_answers": {
                                         "type": "array",
                                         "items": {

@@ -1460,7 +1460,7 @@
         "/api/zakplay/test/answers/update/{test_result_id}": {
             "post": {
                 "tags": [
-                    "ZakPlay - Test"
+                    "zakplay test"
                 ],
                 "summary": "Update test answers",
                 "description": "Submit or update answers for a test by providing user's full name and phone number.",
@@ -2526,10 +2526,6 @@
         {
             "name": "department",
             "description": "department"
-        },
-        {
-            "name": "ZakPlay - Test",
-            "description": "ZakPlay - Test"
         },
         {
             "name": "Tablets",

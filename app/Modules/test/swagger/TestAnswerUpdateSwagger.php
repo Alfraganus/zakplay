@@ -5,7 +5,7 @@ namespace App\Modules\test\swagger;
 /**
  * @OA\Post(
  *     path="/api/zakplay/test/answers/update/{test_result_id}",
- *     tags={"ZakPlay - Test"},
+ *     tags={"zakplay test"},
  *     summary="Update test answers",
  *     description="Submit or update answers for a test by providing user's full name and phone number.",
  *     operationId="updateTestAnswers",

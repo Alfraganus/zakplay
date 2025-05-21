@@ -28,12 +28,58 @@ class UserTestResult extends Model
         return $this->belongsTo(User::class);
     }
 
+    public static function checkIfUserTopRank($test_id, $test_result_id)
+    {
+        $allUsers = UserTestResult::where('test_id', $test_id)
+            ->select('id', 'user_id', 'test_result')
+            ->orderByDesc('test_result')
+            ->get();
+
+        $top_10 = false;
+        $top_3 = false;
+        $percent_higher_than = 0;
+
+        $totalParticipants = $allUsers->count();
+        $userResult = $allUsers->firstWhere('id', $test_result_id);
+
+        if (!$userResult || $totalParticipants === 0) {
+            return [
+                'top_10' => false,
+                'top_3' => false,
+                'percent_higher_than' => 0,
+            ];
+        }
+
+        foreach ($allUsers->take(10) as $index => $user) {
+            if ($user->id == $test_result_id) {
+                if ($index < 3) {
+                    $top_3 = true;
+                } else {
+                    $top_10 = true;
+                }
+            }
+        }
+
+        $lessCount = $allUsers->filter(function ($u) use ($userResult) {
+            return $u->test_result < $userResult->test_result;
+        })->count();
+
+        $percent_higher_than = round(($lessCount / $totalParticipants) * 100, 2);
+
+        return [
+            'top_10' => $top_10,
+            'top_3' => $top_3,
+            'percent_higher_than' => $percent_higher_than,
+        ];
+    }
+
+
     public static function getUsersRank(Request $request, $test_id)
     {
         $topUsers = UserTestResult::where('user_test_results.test_id', $test_id)
-            ->join('users', 'users.id', '=', 'user_test_results.user_id')
-            ->select('user_test_results.user_id', 'users.name', DB::raw('MAX(user_test_results.test_result) as max_result'))
-            ->groupBy('user_test_results.user_id', 'users.name')
+            ->join('platform_users', 'platform_users.id', '=', 'user_test_results.user_id')
+            ->select('user_test_results.user_id', 'platform_users.fullname', DB::raw('MAX(user_test_results.test_result) as max_result'))
+            ->groupBy('user_test_results.user_id', 'platform_users.fullname')
             ->orderByDesc('max_result')
             ->take(10)
             ->get();

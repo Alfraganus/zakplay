@@ -1457,6 +1457,94 @@
                 }
             }
         },
+        "/api/zakplay/test/answers/update/{test_result_id}": {
+            "post": {
+                "tags": [
+                    "ZakPlay - Test"
+                ],
+                "summary": "Update test answers",
+                "description": "Submit or update answers for a test by providing user's full name and phone number.",
+                "operationId": "updateTestAnswers",
+                "parameters": [
+                    {
+                        "name": "test_result_id",
+                        "in": "path",
+                        "description": "ID of the test result",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+998901234567"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful update",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Test answers updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid data."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/zakplay/test/answers/submit": {
             "post": {
                 "tags": [
@@ -2438,6 +2526,10 @@
         {
             "name": "department",
             "description": "department"
+        },
+        {
+            "name": "ZakPlay - Test",
+            "description": "ZakPlay - Test"
         },
         {
             "name": "Tablets",

@@ -45,25 +45,39 @@ class RoadmapTestSubmitService
         $this->roadmapTestRepository = $roadmapTestRepository;
     }
 
-    public static function getUserData(Request $request): PlatformUser
+    public static function getUserData(Request $request)
     {
-        $user = PlatformUser::firstOrNew(
-            ['phone' => $request->input('phone')]
-        );
+        if ($request->input('phone') && $request->input('fullname')) {
+            $user = PlatformUser::firstOrNew(
+                ['phone' => $request->input('phone')]
+            );
 
-        $user->fullname = $request->input('fullname');
-        $user->save();
-
-        return $user;
+            $user->fullname = $request->input('fullname');
+            $user->save();
+            return $user;
+        }
+        return null;
     }
 
+    public function updateResult(Request $request, $test_result_id)
+    {
+        $testResult = UserTestResult::query()->find($test_result_id);
+        $testResult->user_id = self::getUserData($request)->id;
+        $testResult->save();
+        $ranks = UserTestResult::getUsersRank($request, $testResult->test_id);
+
+        return [
+          'msg' =>'Test has been updated',
+          'ranks' => $ranks
+        ];
+    }
 
     public function submitAnswers(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'test_id' => 'required|integer|exists:roadmap_test,id',
-            'fullname' => 'required|string|max:255',
-            'phone' => 'required|numeric|digits_between:9,15',
+            'fullname' => 'string|max:255',
+            'phone' => 'numeric|digits_between:9,15',
             'test_answers' => 'required|array|min:1',
             'test_answers.*.question_id' => 'required|integer|exists:roadmap_test_questions,id',
             'test_answers.*.options' => 'required|array|min:1',
@@ -71,7 +85,7 @@ class RoadmapTestSubmitService
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all() ], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $correctAnswers = 0;
@@ -115,16 +129,15 @@ class RoadmapTestSubmitService
         $isUserPassed = $testQuestionsCount == $correctAnswers;
 
         $leaderboard = Leaderboard::where('finish_date', '>=', date('Y-m-d'))
-        ->where(function ($query) use ($test_id) {
-            $query->where('test_id', $test_id)
-            ->orWhere('test_type', Leaderboard::ALL_TEST);
-        })
+            ->where(function ($query) use ($test_id) {
+                $query->where('test_id', $test_id)
+                    ->orWhere('test_type', Leaderboard::ALL_TEST);
+            })
             ->first();
 
         $leaderboard_id = $leaderboard ? $leaderboard->id : null;
-
-         UserTestResult::query()->insert([
-            'user_id' =>self::getUserData($request)->id,
+        $testResult = UserTestResult::query()->create([
+            'user_id' => self::getUserData($request)->id ?? null,
             'test_id' => $test_id,
             'test_result' => $correctAnswers,
             'percentage' => ($correctAnswers / $testQuestionsCount) * 100,
@@ -132,17 +145,19 @@ class RoadmapTestSubmitService
             'device_id' => $request->header('device_id') ?? null,
             'is_passed' => $isUserPassed,
             'average_time' => $request->input('average_time'),
-            'leaderboard_id' =>$leaderboard_id,
+            'leaderboard_id' => $leaderboard_id,
         ]);
 
         $roadmapTest = RoadmapTest::find($test_id);
         if ($roadmapTest) {
             $roadmapTest->increment('used_times');
+            $roadmapTest->save();
         }
 
         return Response()->json([
             'msg' => 'Answers have been recorded successfully!',
-            'is_passed' => UserTestResult::getUsersRank($request, $test_id),
+            'rest_result_id' => $testResult->id,
+            'result' => UserTestResult::checkIfUserTopRank($test_id, $testResult->id),
             'user_rank' => $isUserPassed,
             'correctAnswers' => $correctAnswers,
         ]);

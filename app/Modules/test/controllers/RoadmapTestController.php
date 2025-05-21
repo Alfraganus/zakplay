@@ -110,6 +110,12 @@ class RoadmapTestController extends Controller
       return $this->testSubmitService->submitAnswers($request);
     }
 
+    public function updateTestResult(Request $request, $testId)
+    {
+        return $this->testSubmitService->updateResult($request,$testId);
+
+    }
+
     public function getAnswers(Request $request)
     {
         return $this->testSubmitService->getUserTestResult($request->header('device_id'));

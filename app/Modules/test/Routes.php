@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/zakplay/test/get', [RoadmapTestQuestionController::class, 'getNextTest']);
 Route::post('/zakplay/test/answers/show', [RoadmapTestController::class, 'getAnswers']);
 Route::post('/zakplay/test/answers/submit', [RoadmapTestController::class, 'submitAnswers']);
+Route::post('/zakplay/test/answers/update/{test_result_id}', [RoadmapTestController::class, 'updateTestResult']);
 Route::post('/zakplay/test/create', [RoadmapTestController::class, 'createTest']);
 Route::get('/zakplay/test/get-by-department_id', [RoadmapTestController::class, 'getAllTestByDepartmentId']);
 Route::put('/zakplay/test/update/{id}', [RoadmapTestController::class, 'update']);

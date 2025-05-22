@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\DriverLocationController;
 use App\Http\Controllers\Api\LeaderboardController;
 use App\Http\Controllers\Api\TabletController;
 use App\Http\Controllers\Api\WeatherController;
@@ -31,7 +32,7 @@ Route::get('/leaderboards/{id}/results', [LeaderboardController::class, 'getResu
 Route::get('/dashboard/user-counts', [DashboardController::class, 'getCounts']);
 Route::get('/dashboard/weekly-test-stats', [DashboardController::class, 'getWeeklyTestStats']);
 
-
+Route::apiResource('driver-locations', DriverLocationController::class);
 Route::get('/weather/current', [WeatherController::class, 'currentWeather']);
 Route::get('/weather/forecast', [WeatherController::class, 'forecast']);
 Route::get('/weather/search', [WeatherController::class, 'search']);

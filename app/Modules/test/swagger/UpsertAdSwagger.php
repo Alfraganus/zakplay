@@ -25,6 +25,11 @@ namespace App\Modules\test\swagger;
  *                     description="ID of the department"
  *                 ),
  *                 @OA\Property(
+ *                     property="ad_type",
+ *                     type="string",
+ *                     description="type of the department"
+ *                 ),
+ *                 @OA\Property(
  *                     property="title",
  *                     type="string",
  *                     description="Title of the ad"

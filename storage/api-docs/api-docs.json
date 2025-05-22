@@ -532,6 +532,174 @@
                 }
             }
         },
+        "/api/driver-locations": {
+            "get": {
+                "tags": [
+                    "Driver Locations"
+                ],
+                "summary": "List all driver locations",
+                "description": "Get all GPS locations.",
+                "operationId": "318108050bea45c9bedd1c28c817158e",
+                "responses": {
+                    "200": {
+                        "description": "List of driver locations"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Driver Locations"
+                ],
+                "summary": "Store a new driver location",
+                "description": "Store a new GPS location.",
+                "operationId": "5cfbced70fa5fbfd4b85bc73c5d494d0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "driver_id",
+                                    "latitude",
+                                    "longitude",
+                                    "recorded_at"
+                                ],
+                                "properties": {
+                                    "driver_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 41.2995
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 69.2401
+                                    },
+                                    "recorded_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-05-22 10:30:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Location created"
+                    }
+                }
+            }
+        },
+        "/api/driver-locations/{id}": {
+            "get": {
+                "tags": [
+                    "Driver Locations"
+                ],
+                "summary": "Show driver location by ID",
+                "description": "Show a single GPS location.",
+                "operationId": "f91cd3f3f59311c4aedf440b48482983",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver location",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Driver location details"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Driver Locations"
+                ],
+                "summary": "Update driver location by ID",
+                "description": "Update a GPS location.",
+                "operationId": "4c48354c58be278490b286f52a0e5a3e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver location",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 41.3011
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 69.2411
+                                    },
+                                    "recorded_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-05-22 11:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated driver location"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Driver Locations"
+                ],
+                "summary": "Delete driver location by ID",
+                "description": "Delete a GPS location.",
+                "operationId": "8bf613a25108b2e5594f9ca8e64a47d8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver location",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Driver location deleted"
+                    }
+                }
+            }
+        },
         "/api/leaderboards": {
             "get": {
                 "tags": [
@@ -1858,6 +2026,10 @@
                                         "description": "ID of the department",
                                         "type": "integer"
                                     },
+                                    "ad_type": {
+                                        "description": "type of the department",
+                                        "type": "string"
+                                    },
                                     "title": {
                                         "description": "Title of the ad",
                                         "type": "string"
@@ -2506,6 +2678,10 @@
         {
             "name": "Dashboard",
             "description": "Dashboard"
+        },
+        {
+            "name": "Driver Locations",
+            "description": "Driver Locations"
         },
         {
             "name": "Ads",

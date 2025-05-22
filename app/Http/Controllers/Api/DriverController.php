@@ -150,7 +150,13 @@ class DriverController extends Controller
 
             $driver->update($validated);
 
-            return response()->json($driver, Response::HTTP_OK);
+            if ($request->file('image')) {
+                if ($driver->hasMedia(Driver::MEDIA_COLLECTION)) {
+                    $driver->clearMediaCollection(Driver::MEDIA_COLLECTION);
+                }
+                $driver->addMedia($request->file('image'))
+                    ->toMediaCollection(Driver::MEDIA_COLLECTION);
+            }
 
         } catch (ModelNotFoundException $e) {
             return response()->json([

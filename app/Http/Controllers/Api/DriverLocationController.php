@@ -19,7 +19,7 @@ class DriverLocationController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"driver_id", "latitude", "longitude", "recorded_at"},
+     *             required={"driver_id", "latitude", "longitude"},
      *             @OA\Property(property="driver_id", type="integer", example=1),
      *             @OA\Property(property="latitude", type="number", format="float", example=41.2995),
      *             @OA\Property(property="longitude", type="number", format="float", example=69.2401),
@@ -106,7 +106,6 @@ class DriverLocationController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="latitude", type="number", format="float", example=41.3011),
      *             @OA\Property(property="longitude", type="number", format="float", example=69.2411),
-     *             @OA\Property(property="recorded_at", type="string", format="date-time", example="2025-05-22 11:00:00")
      *         )
      *     ),
      *     @OA\Response(
@@ -122,7 +121,6 @@ class DriverLocationController extends Controller
         $validated = $request->validate([
             'latitude' => 'sometimes|numeric|between:-90,90',
             'longitude' => 'sometimes|numeric|between:-180,180',
-            'recorded_at' => 'sometimes|date_format:Y-m-d H:i:s',
         ]);
 
         $location->update($validated);

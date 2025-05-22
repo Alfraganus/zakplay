@@ -561,8 +561,7 @@
                                 "required": [
                                     "driver_id",
                                     "latitude",
-                                    "longitude",
-                                    "recorded_at"
+                                    "longitude"
                                 ],
                                 "properties": {
                                     "driver_id": {
@@ -578,11 +577,6 @@
                                         "type": "number",
                                         "format": "float",
                                         "example": 69.2401
-                                    },
-                                    "recorded_at": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "example": "2025-05-22 10:30:00"
                                     }
                                 },
                                 "type": "object"
@@ -656,11 +650,6 @@
                                         "type": "number",
                                         "format": "float",
                                         "example": 69.2411
-                                    },
-                                    "recorded_at": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "example": "2025-05-22 11:00:00"
                                     }
                                 },
                                 "type": "object"

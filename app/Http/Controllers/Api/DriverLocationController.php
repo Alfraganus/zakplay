@@ -19,10 +19,10 @@ class DriverLocationController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"driver_id", "latitude", "longitude"},
+     *             required={"driver_id", "lat", "lon"},
      *             @OA\Property(property="driver_id", type="integer", example=1),
-     *             @OA\Property(property="latitude", type="number", format="float", example=41.2995),
-     *             @OA\Property(property="longitude", type="number", format="float", example=69.2401),
+     *             @OA\Property(property="lat", type="number", format="float", example=41.2995),
+     *             @OA\Property(property="lon", type="number", format="float", example=69.2401),
      *         )
      *     ),
      *     @OA\Response(
@@ -104,8 +104,8 @@ class DriverLocationController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         @OA\JsonContent(
-     *             @OA\Property(property="latitude", type="number", format="float", example=41.3011),
-     *             @OA\Property(property="longitude", type="number", format="float", example=69.2411),
+     *             @OA\Property(property="lat", type="number", format="float", example=41.3011),
+     *             @OA\Property(property="lon", type="number", format="float", example=69.2411),
      *         )
      *     ),
      *     @OA\Response(
@@ -119,8 +119,8 @@ class DriverLocationController extends Controller
         $location = DriverLocation::findOrFail($id);
 
         $validated = $request->validate([
-            'latitude' => 'sometimes|numeric|between:-90,90',
-            'longitude' => 'sometimes|numeric|between:-180,180',
+            'lat' => 'sometimes|numeric|between:-90,90',
+            'lon' => 'sometimes|numeric|between:-180,180',
         ]);
 
         $location->update($validated);

@@ -560,20 +560,20 @@
                             "schema": {
                                 "required": [
                                     "driver_id",
-                                    "latitude",
-                                    "longitude"
+                                    "lat",
+                                    "lon"
                                 ],
                                 "properties": {
                                     "driver_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "latitude": {
+                                    "lat": {
                                         "type": "number",
                                         "format": "float",
                                         "example": 41.2995
                                     },
-                                    "longitude": {
+                                    "lon": {
                                         "type": "number",
                                         "format": "float",
                                         "example": 69.2401
@@ -641,12 +641,12 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "latitude": {
+                                    "lat": {
                                         "type": "number",
                                         "format": "float",
                                         "example": 41.3011
                                     },
-                                    "longitude": {
+                                    "lon": {
                                         "type": "number",
                                         "format": "float",
                                         "example": 69.2411

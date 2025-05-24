@@ -222,14 +222,7 @@ class DriverController extends Controller
             return response()->json(['message' => 'Driver not found'], 404);
         }
 
-        return response()->json([
-            'fullname' => $driver->fullname,
-            'login' => $driver->login,
-            'car_color' => $driver->car_color_name,
-            'car_model' => $driver->carModel->name ?? null,
-            'car_model_brand' => $driver->carModel->brand ?? null,
-            'car_plate_number' => $driver->car_plate_number,
-        ]);
+        return response()->json($driver);
     }
 
 

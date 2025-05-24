@@ -68,6 +68,17 @@ class RoadmapTestQuestionService
     {
         DB::beginTransaction();
         try {
+            $validator = Validator::make($request->all(), [
+                'questionInfo.test_id' => 'required|integer|exists:roadmap_test,id',
+                'questionInfo.question_text' => 'required|string',
+                'questionInfo.points' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors' => $validator->errors()
+                ], 422);
+            }
             $questionData = $request->input('questionInfo');
             $questionModel = $this->createWithLanguage($questionData);
 

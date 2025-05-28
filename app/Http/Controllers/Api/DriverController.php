@@ -216,8 +216,7 @@ class DriverController extends Controller
      */
     public function getByPincode(Request $request)
     {
-        $driver = Driver::with('carModel')->where('pincode', $request->pincode)->first();
-
+        $driver = Driver::where('pincode', $request->pincode)->first();
         if (!$driver) {
             return response()->json(['message' => 'Driver not found'], 404);
         }

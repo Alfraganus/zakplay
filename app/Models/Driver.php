@@ -40,8 +40,4 @@ class Driver extends Model implements HasMedia
         return $this->hasMany(Tablet::class);
     }
 
-    public function carModel()
-    {
-        return $this->belongsTo(CarModel::class, 'car_model'); // assuming 'car_model' is the foreign key
-    }
 }

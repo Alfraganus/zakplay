@@ -80,6 +80,7 @@ class UserTestResult extends Model
             ->join('platform_users', 'platform_users.id', '=', 'user_test_results.user_id')
             ->select('user_test_results.user_id', 'platform_users.fullname', DB::raw('MAX(user_test_results.test_result) as max_result'))
             ->groupBy('user_test_results.user_id', 'platform_users.fullname')
+            ->orderBy('max_result', 'desc')
             ->orderByDesc('max_result')
             ->take(10)
             ->get();

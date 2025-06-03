@@ -76,23 +76,20 @@ class UserTestResult extends Model
 
     public static function getUsersRank(Request $request, $test_id)
     {
-        $topUsers = UserTestResult::where('user_test_results.test_id', $test_id)
+        $topUsers = UserTestResult::select('user_test_results.user_id', 'platform_users.fullname', DB::raw('MAX(user_test_results.test_result) as max_result'))
             ->join('platform_users', 'platform_users.id', '=', 'user_test_results.user_id')
-            ->select('user_test_results.user_id', 'platform_users.fullname', DB::raw('MAX(user_test_results.test_result) as max_result'))
             ->groupBy('user_test_results.user_id', 'platform_users.fullname')
             ->orderBy('max_result', 'desc')
             ->orderByDesc('max_result')
             ->take(10)
             ->get();
 
-        $userRank = UserTestResult::where('test_id', $test_id)
-            ->where('user_id', RoadmapTestSubmitService::getUserData($request)->id)
+        $userRank = UserTestResult::where('user_id', RoadmapTestSubmitService::getUserData($request)->id)
             ->first();
 
         $userRankNumber = null;
         if ($userRank) {
-            $userRankNumber = UserTestResult::where('test_id', $test_id)
-                ->where('test_result', '>=', $userRank->test_result)
+            $userRankNumber = UserTestResult::where('test_result', '>=', $userRank->test_result)
                 ->count();
         }
 

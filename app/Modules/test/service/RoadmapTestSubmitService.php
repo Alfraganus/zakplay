@@ -4,6 +4,7 @@ namespace App\Modules\test\service;
 
 use App\Models\DeviceToken;
 use App\Models\Leaderboard;
+use App\Models\LeaderboardResult;
 use App\Models\PlatformUser;
 use App\Models\Setting;
 use App\Models\User;
@@ -94,6 +95,7 @@ class RoadmapTestSubmitService
                 'error' => 'Test not found'
             ], 404);
         }
+        $userScore = 0;
         foreach ($request->input('test_answers') as $answer) {
             $correctOption = 0;
             $incorrectOption = 0;
@@ -108,7 +110,7 @@ class RoadmapTestSubmitService
             switch ($question->question_option_type) {
 
                 case self::QUESTION_TYPE_ONLY_ONE_CORRECT_OPTION || self::QUESTION_TYPE_BOOLEAN_OPTION:
-                    $this->sumSingleCorrectOption($correctanswer, $answer, $correctAnswers);
+                    $this->sumSingleCorrectOption($correctanswer, $answer, $correctAnswers,$userScore,$question->points);
                     break;
 
                 case self::QUESTION_TYPE_MORE_CORRECT_OPTIONS:
@@ -128,25 +130,38 @@ class RoadmapTestSubmitService
             ->count();
         $isUserPassed = $testQuestionsCount == $correctAnswers;
 
-        $leaderboard = Leaderboard::where('finish_date', '>=', date('Y-m-d'))
-            ->where(function ($query) use ($test_id) {
-                $query->where('test_id', $test_id)
-                    ->orWhere('test_type', Leaderboard::ALL_TEST);
-            })
-            ->first();
 
-        $leaderboard_id = $leaderboard ? $leaderboard->id : null;
         $testResult = UserTestResult::query()->create([
             'user_id' => self::getUserData($request)->id ?? null,
             'test_id' => $test_id,
             'test_result' => $correctAnswers,
             'percentage' => ($correctAnswers / $testQuestionsCount) * 100,
-            'max_score' => $testQuestionsCount,
+            'max_score' => $userScore,
             'device_id' => $request->header('device_id') ?? null,
             'is_passed' => $isUserPassed,
             'average_time' => $request->input('average_time'),
-            'leaderboard_id' => $leaderboard_id,
         ]);
+
+        $leaderboards = Leaderboard::where('finish_date', '>=', date('Y-m-d'))->get();
+        foreach ($leaderboards as $leaderboard) {
+            if ($leaderboard->test_type == Leaderboard::ALL_TEST) {
+                LeaderboardResult::create([
+                    'leaderboard_id' => $leaderboard->id,
+                    'test_id' => null,
+                    'test_result_id' => $testResult->id,
+                    'is_special_leaderboard' => false,
+                ]);
+            }
+            if ($leaderboard->test_type == Leaderboard::SPECIAL_TEST && $leaderboard->test_id == $test_id) {
+                LeaderboardResult::create([
+                    'leaderboard_id' => $leaderboard->id,
+                    'test_id' => $test_id,
+                    'test_result_id' => $testResult->id,
+                    'is_special_leaderboard' => true,
+                ]);
+            }
+        }
+
 
         $roadmapTest = RoadmapTest::find($test_id);
         if ($roadmapTest) {
@@ -185,10 +200,11 @@ class RoadmapTestSubmitService
         }
     }
 
-    public function sumSingleCorrectOption($correctOption, $answer, &$correctAnswers)
+    public function sumSingleCorrectOption($correctOption, $answer, &$correctAnswers, &$userScore, $points)
     {
         if ($correctOption && $correctOption->id == $answer['options'][0]) {
             $correctAnswers++;
+            $userScore += $points;
         }
     }
 

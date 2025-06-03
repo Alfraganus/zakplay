@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leaderboard;
+use App\Models\LeaderboardResult;
 use App\Modules\test\models\UserTestResult;
 use Illuminate\Http\Request;
 
@@ -189,11 +190,15 @@ class LeaderboardController extends Controller
             return response()->json(['message' => 'Leaderboard not found'], 404);
         }
 
-        $results = UserTestResult::where('leaderboard_id', $id)
-            ->with(['user', 'test'])
+        $results = LeaderboardResult::where('leaderboard_id', $id)
+            ->with([
+                'testResult.user',
+                'testResult.test',
+            ])
             ->get();
 
         $numberOfUsers = $results->count();
+
 
         return response()->json([
             'leaderboard_id' => $leaderboard,

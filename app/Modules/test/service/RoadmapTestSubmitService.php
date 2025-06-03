@@ -129,13 +129,16 @@ class RoadmapTestSubmitService
             ->where('test_id', '=', $request->input('test_id'))
             ->count();
         $isUserPassed = $testQuestionsCount == $correctAnswers;
+        $sumPointsMax =  RoadmapTestQuestion::query()
+            ->where('test_id', '=', $request->input('test_id'))
+            ->sum('points');
 
         $testResult = UserTestResult::query()->create([
             'user_id' => self::getUserData($request)->id ?? null,
             'test_id' => $test_id,
-            'test_result' => $correctAnswers,
+            'test_result' => $userScore,
             'percentage' => ($correctAnswers / $testQuestionsCount) * 100,
-            'max_score' => $userScore,
+            'max_score' =>  $sumPointsMax,
             'device_id' => $request->header('device_id') ?? null,
             'is_passed' => $isUserPassed,
             'average_time' => $request->input('average_time'),

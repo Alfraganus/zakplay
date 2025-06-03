@@ -41,14 +41,10 @@ Route::get('/weather/search', [WeatherController::class, 'search']);
 
 
 
-Route::get('/data/{table}', function (Request $request, $table, $filterColumn, $value) {
+Route::get('/data/{table}', function (Request $request, $table,) {
     $orderBy = $request->query('order_by', 'id'); // Default order by 'id'
 
-    if (!Schema::hasTable($table) || !Schema::hasColumn($table, $filterColumn) || !Schema::hasColumn($table, $orderBy)) {
-        return response()->json(['error' => 'Invalid table or column'], 400);
-    }
 
-    // Fetch data
     $data = DB::table($table)
         ->orderByDesc($orderBy)
         ->get();

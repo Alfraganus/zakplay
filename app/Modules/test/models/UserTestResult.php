@@ -28,10 +28,9 @@ class UserTestResult extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function checkIfUserTopRank($test_id, $test_result_id)
+    public static function checkIfUserTopRank($test_result_id)
     {
-        $allUsers = UserTestResult::where('test_id', $test_id)
-            ->select('id', 'user_id', 'test_result')
+        $allUsers = UserTestResult::select('id', 'user_id', 'test_result')
             ->orderByDesc('test_result')
             ->get();
 

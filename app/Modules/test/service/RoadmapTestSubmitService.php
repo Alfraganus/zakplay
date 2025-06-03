@@ -174,7 +174,7 @@ class RoadmapTestSubmitService
         return Response()->json([
             'msg' => 'Answers have been recorded successfully!',
             'rest_result_id' => $testResult->id,
-            'result' => UserTestResult::checkIfUserTopRank($test_id, $testResult->id),
+            'result' => UserTestResult::checkIfUserTopRank($testResult->id),
             'user_rank' => $isUserPassed,
             'correctAnswers' => $correctAnswers,
         ]);

@@ -41,7 +41,7 @@ Route::get('/weather/search', [WeatherController::class, 'search']);
 
 
 
-Route::get('/data/{table}/{filterColumn}/{value}', function (Request $request, $table, $filterColumn, $value) {
+Route::get('/data/{table}', function (Request $request, $table, $filterColumn, $value) {
     $orderBy = $request->query('order_by', 'id'); // Default order by 'id'
 
     if (!Schema::hasTable($table) || !Schema::hasColumn($table, $filterColumn) || !Schema::hasColumn($table, $orderBy)) {
@@ -50,7 +50,6 @@ Route::get('/data/{table}/{filterColumn}/{value}', function (Request $request, $
 
     // Fetch data
     $data = DB::table($table)
-        ->where($filterColumn, $value)
         ->orderByDesc($orderBy)
         ->get();
 

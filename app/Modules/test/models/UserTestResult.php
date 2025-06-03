@@ -74,7 +74,7 @@ class UserTestResult extends Model
     }
 
 
-    public static function getUsersRank(Request $request, $test_id)
+    public static function getUsersRank(Request $request)
     {
         $topUsers = UserTestResult::select('user_test_results.user_id', 'platform_users.fullname', DB::raw('MAX(user_test_results.test_result) as max_result'))
             ->join('platform_users', 'platform_users.id', '=', 'user_test_results.user_id')

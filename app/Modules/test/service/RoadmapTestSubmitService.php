@@ -130,7 +130,6 @@ class RoadmapTestSubmitService
             ->count();
         $isUserPassed = $testQuestionsCount == $correctAnswers;
 
-
         $testResult = UserTestResult::query()->create([
             'user_id' => self::getUserData($request)->id ?? null,
             'test_id' => $test_id,

@@ -52,8 +52,5 @@ class Leaderboard extends Model
         return $this->belongsTo( RoadmapTest::class, 'test_id');
     }
 
-    public function results()
-    {
-        return $this->hasMany(UserTestResult::class, 'leaderboard_id');
-    }
+
 }

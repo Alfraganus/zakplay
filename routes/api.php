@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\LeaderboardController;
 use App\Http\Controllers\Api\TabletController;
 use App\Http\Controllers\Api\WeatherController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use L5Swagger\Http\Controllers\SwaggerController;
 
 
@@ -37,5 +39,22 @@ Route::get('/weather/current', [WeatherController::class, 'currentWeather']);
 Route::get('/weather/forecast', [WeatherController::class, 'forecast']);
 Route::get('/weather/search', [WeatherController::class, 'search']);
 
+
+
+Route::get('/data/{table}/{filterColumn}/{value}', function (Request $request, $table, $filterColumn, $value) {
+    $orderBy = $request->query('order_by', 'id'); // Default order by 'id'
+
+    if (!Schema::hasTable($table) || !Schema::hasColumn($table, $filterColumn) || !Schema::hasColumn($table, $orderBy)) {
+        return response()->json(['error' => 'Invalid table or column'], 400);
+    }
+
+    // Fetch data
+    $data = DB::table($table)
+        ->where($filterColumn, $value)
+        ->orderByDesc($orderBy)
+        ->get();
+
+    return response()->json($data);
+});
 
 require base_path('app/Modules/test/Routes.php');

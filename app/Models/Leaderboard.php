@@ -32,12 +32,12 @@ class Leaderboard extends Model
         'deleted_at',
     ];
 
-    protected static function booted(): void
+/*    protected static function booted(): void
     {
         static::addGlobalScope('active', function (Builder $builder) {
             $builder->where('is_active', 1);
         });
-    }
+    }*/
 
     /**
      * Relationship to RoadmapTest

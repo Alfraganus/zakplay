@@ -1,5 +1,6 @@
 <?php
 namespace App\Modules\test\models;
+use App\Models\PlatformUser;
 use App\Models\User;
 use App\Modules\test\service\RoadmapTestSubmitService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,7 @@ class UserTestResult extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(PlatformUser::class);
     }
 
     public static function checkIfUserTopRank($test_result_id)

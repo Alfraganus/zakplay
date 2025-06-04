@@ -105,24 +105,9 @@ class RoadmapTestSubmitService
                     $answer['question_id']
                 )
                 ->where('is_correct', true);
-            $correctOptions = $options->pluck('id')->toArray();
             $correctanswer = $options->first();
-            switch ($question->question_option_type) {
+            $this->sumSingleCorrectOption($correctanswer, $answer, $correctAnswers, $userScore, $question->points);
 
-                case self::QUESTION_TYPE_ONLY_ONE_CORRECT_OPTION || self::QUESTION_TYPE_BOOLEAN_OPTION:
-                    $this->sumSingleCorrectOption($correctanswer, $answer, $correctAnswers,$userScore,$question->points);
-                    break;
-
-                case self::QUESTION_TYPE_MORE_CORRECT_OPTIONS:
-                    $this->sumMultipleCorrectOptions(
-                        $answer,
-                        $correctOptions,
-                        $correctOption,
-                        $incorrectOption,
-                        $correctAnswers
-                    );
-                    break;
-            }
         }
         $test_id = $request->input('test_id');
         $testQuestionsCount = RoadmapTestQuestion::query()

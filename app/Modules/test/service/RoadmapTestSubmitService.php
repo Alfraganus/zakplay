@@ -97,8 +97,6 @@ class RoadmapTestSubmitService
         }
         $userScore = 0;
         foreach ($request->input('test_answers') as $answer) {
-            $correctOption = 0;
-            $incorrectOption = 0;
             $question = $this->roadmapTestQuestionRepo->getById($answer['question_id']);
             $options = $this->roadmapTestQuestionOptionRepo
                 ->getByQuestionId(
@@ -106,6 +104,7 @@ class RoadmapTestSubmitService
                 )
                 ->where('is_correct', true);
             $correctanswer = $options->first();
+
             $this->sumSingleCorrectOption($correctanswer, $answer, $correctAnswers, $userScore, $question->points);
 
         }

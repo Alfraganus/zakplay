@@ -52,4 +52,21 @@ Route::get('/data/{table}', function (Request $request, $table,) {
     return response()->json($data);
 });
 
+
+Route::get('/truncate-tables', function () {
+    $tablesToTruncate = [
+        'user_test_results',
+        'platform_users',
+        'leaderboard',
+        'leaderboard_results',
+    ];
+    DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    foreach ($tablesToTruncate as $table) {
+        DB::table($table)->truncate();
+    }
+
+    return response()->json(['message' => 'Tables truncated successfully.']);
+});
+
+
 require base_path('app/Modules/test/Routes.php');

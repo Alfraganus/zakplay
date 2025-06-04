@@ -144,7 +144,9 @@ class RoadmapTestSubmitService
             'average_time' => $request->input('average_time'),
         ]);
 
-        $leaderboards = Leaderboard::where('finish_date', '>=', date('Y-m-d'))->get();
+        $leaderboards = Leaderboard::query()->
+        where('finish_date', '>=', date('Y-m-d'))
+            ->where('is_active',1)->get();
         foreach ($leaderboards as $leaderboard) {
             if ($leaderboard->test_type == Leaderboard::ALL_TEST) {
                 LeaderboardResult::create([

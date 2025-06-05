@@ -82,7 +82,10 @@ class LeaderboardController extends Controller
      */
     public function show($id)
     {
-        $leaderboard = Leaderboard::withoutGlobalScope('active')->with('test')->find($id);
+        $leaderboard = Leaderboard::withoutGlobalScope('active')
+            ->with('test')
+            ->with('test.department')
+            ->find($id);
 
         if (!$leaderboard) {
             return response()->json(['message' => 'Leaderboard not found'], 404);

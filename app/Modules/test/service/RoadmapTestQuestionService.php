@@ -167,4 +167,9 @@ class RoadmapTestQuestionService
         return $this->repository->getByTestId($testId)->get();
     }
 
+    public function getQuestionByTestIdRandom($testId)
+    {
+        return $this->repository->getByTestId($testId)->inRandomOrder()->get();
+    }
+
 }
